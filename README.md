@@ -6,4 +6,6 @@
 
 
 
-#android 弹框 popWindow 
+##android 弹框 popWindow
+效果
+![](CommonViewApplication/picture/pop/gray_backgroud_pop.png)
