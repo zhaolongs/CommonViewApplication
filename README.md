@@ -8,4 +8,4 @@
 
 ##android 弹框 popWindow
 效果
-![](CommonViewApplication/picture/pop/gray_backgroud_pop.png)
+![](https://github.com/zhaolongs/CommonViewApplication/blob/master/picture/pop/gray_backgroud_pop.png?raw=true)
