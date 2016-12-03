@@ -24,7 +24,11 @@ public class MainActivity extends AppCompatActivity {
         initViewFunction();
 
         grayBackgroundPopBottomFunction();
+        popFromTopShowFunction();
+        popFromRightShowFunction();
+        popFromLeftShowFunction();
     }
+
 
     private void initViewFunction() {
         mBackGroundGrayPopFromTopButton = (Button) findViewById(R.id.bt_pop_from_top);
@@ -41,9 +45,34 @@ public class MainActivity extends AppCompatActivity {
         mBackGroundGrayPopFromTopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GrayBackgroundPopFunction.getInstance().show(MainActivity.this, mBackGroundGrayPopFromTopButton);
+                GrayBackgroundPopFunction.getInstance().fromBottomShow(MainActivity.this, mBackGroundGrayPopFromTopButton);
             }
         });
+    }
+
+    /**
+     * 从顶部弹出来
+     */
+    private void popFromTopShowFunction() {
+        mBackGroundGrayPopFromTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GrayBackgroundPopFunction.getInstance().fromTopShow(MainActivity.this, mBackGroundGrayPopFromTopButton);
+            }
+        });
+    }
+
+    /**
+     * 从右边弹出来
+     */
+    private void popFromRightShowFunction() {
+
+    }
+
+    /**
+     * 从左边弹出来
+     */
+    private void popFromLeftShowFunction() {
     }
 
 

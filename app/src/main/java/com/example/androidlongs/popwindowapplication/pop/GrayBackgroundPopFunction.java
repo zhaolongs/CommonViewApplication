@@ -30,6 +30,7 @@ public class GrayBackgroundPopFunction {
 
     }
 
+
     private static class SingPopFunction {
         private static GrayBackgroundPopFunction sGrayBackgroundPopFunction = new GrayBackgroundPopFunction();
     }
@@ -38,7 +39,50 @@ public class GrayBackgroundPopFunction {
         return SingPopFunction.sGrayBackgroundPopFunction;
     }
 
-    public void show(Context context, View view) {
+    /**
+     * 从底部弹出来
+     */
+    public void fromBottomShow(Context context, View view) {
+
+        showFunctionx(context,view,R.style.popwin_chat_clini_anim_style);
+    }
+
+    /**
+     * 从顶部弹出来
+     *
+     * @param context 上下文对象
+     * @param view    依赖View
+     */
+    public void fromTopShow(Context context, View view) {
+    }
+
+    /**
+     * 从左边弹出来
+     *
+     * @param context 上下文对象
+     * @param view    依赖View
+     */
+    public void fromLeftShow(Context context, View view) {
+    }
+
+    /**
+     * 从右边弹出来
+     *
+     * @param context 上下文对象
+     * @param view    依赖View
+     */
+    public void fromRightShow(Context context, View view) {
+    }
+
+    public void close() {
+        if (mPopupWindow != null) {
+            mPopupWindow.dismiss();
+            mPopupWindow = null;
+        }
+    }
+
+
+    private void showFunctionx(Context context,View view ,int sytle){
 
         // 获取自定义布局文件activity_popupwindow_left.xml的视图
         View popupWindow_view = View.inflate(context, R.layout.pop_progress_loading, null);
@@ -56,7 +100,10 @@ public class GrayBackgroundPopFunction {
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(
                 Color.TRANSPARENT));
         //设置动画
-        mPopupWindow.setAnimationStyle(R.style.popwin_chat_clini_anim_style);
+        if (sytle==0){
+            sytle = R.style.popwin_chat_clini_anim_style;
+        }
+        mPopupWindow.setAnimationStyle(sytle);
         //显示
         mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
@@ -78,11 +125,5 @@ public class GrayBackgroundPopFunction {
         popContentLinearLayout.setAnimation(animationSet);
 
 
-    }
-    public void close(){
-        if (mPopupWindow != null) {
-            mPopupWindow.dismiss();
-            mPopupWindow =null;
-        }
     }
 }
