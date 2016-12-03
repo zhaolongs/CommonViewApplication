@@ -19,11 +19,35 @@
 
 
             <Button
-                android:id="@+id/bt_back_ground_gray"
+                android:id="@+id/bt_pop_from_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background_selector"
-                android:text="第一个蒙版pop"/>
+                android:text="@string/pop_from_bottom"/>
+
+            <Button
+                android:id="@+id/bt_pop_from_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background_selector"
+                android:text="@string/pop_from_top"/>
+
+            <Button
+                android:id="@+id/bt_pop_from_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background_selector"
+                android:text="@string/pop_from_left"/>
+
+            <Button
+                android:id="@+id/bt_pop_from_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background_selector"
+                android:text="@string/pop_from_right"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -11,7 +11,10 @@ import com.example.androidlongs.popwindowapplication.pop.GrayBackgroundPopFuncti
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mBackGroundGrayPopButton;
+    private Button mBackGroundGrayPopFromTopButton;
+    private Button mBackGroundGrayPopFromBottomButton;
+    private Button mBackGroundGrayPopFromLeftButton;
+    private Button mBackGroundGrayPopFromRightButton;
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -24,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewFunction() {
-        mBackGroundGrayPopButton = (Button) findViewById(R.id.bt_back_ground_gray);
+        mBackGroundGrayPopFromTopButton = (Button) findViewById(R.id.bt_pop_from_top);
+        mBackGroundGrayPopFromBottomButton = (Button) findViewById(R.id.bt_pop_from_bottom);
+        mBackGroundGrayPopFromLeftButton = (Button) findViewById(R.id.bt_pop_from_left);
+        mBackGroundGrayPopFromRightButton = (Button) findViewById(R.id.bt_pop_from_right);
     }
 
     /***
@@ -32,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
      * 从底部弹出
      */
     private void grayBackgroundPopBottomFunction() {
-        mBackGroundGrayPopButton.setOnClickListener(new View.OnClickListener() {
+        mBackGroundGrayPopFromTopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GrayBackgroundPopFunction.getInstance().show(MainActivity.this, mBackGroundGrayPopButton);
+                GrayBackgroundPopFunction.getInstance().show(MainActivity.this, mBackGroundGrayPopFromTopButton);
             }
         });
     }
