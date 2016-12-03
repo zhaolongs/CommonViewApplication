@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViewFunction();
 
-        grayBackgroundPopFunction();
+        grayBackgroundPopBottomFunction();
     }
 
     private void initViewFunction() {
@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     /***
      * 蒙版Pop
+     * 从底部弹出
      */
-    private void grayBackgroundPopFunction() {
+    private void grayBackgroundPopBottomFunction() {
         mBackGroundGrayPopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
