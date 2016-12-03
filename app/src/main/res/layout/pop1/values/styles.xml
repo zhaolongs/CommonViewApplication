@@ -15,18 +15,18 @@
     </style>
 
     <style name="popwin_from_top_anim_style">
-        <item name="android:windowEnterAnimation">@anim/pop_from_bottom_in</item>
-        <item name="android:windowExitAnimation">@anim/pop_from_bottom_out</item>
+        <item name="android:windowEnterAnimation">@anim/pop_from_top_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_from_top_out</item>
     </style>
 
     <style name="popwin_from_left_anim_style">
-        <item name="android:windowEnterAnimation">@anim/pop_from_bottom_in</item>
-        <item name="android:windowExitAnimation">@anim/pop_from_bottom_out</item>
+        <item name="android:windowEnterAnimation">@anim/pop_from_left_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_from_left_out</item>
     </style>
 
 
     <style name="popwin_from_right_anim_style">
-        <item name="android:windowEnterAnimation">@anim/pop_from_bottom_in</item>
-        <item name="android:windowExitAnimation">@anim/pop_from_bottom_out</item>
+        <item name="android:windowEnterAnimation">@anim/pop_from_right_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_from_right_out</item>
     </style>
 </resources>

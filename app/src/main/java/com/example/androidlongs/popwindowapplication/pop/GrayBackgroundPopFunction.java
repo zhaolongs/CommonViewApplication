@@ -44,7 +44,7 @@ public class GrayBackgroundPopFunction {
      */
     public void fromBottomShow(Context context, View view) {
 
-        showFunctionx(context,view,R.style.popwin_chat_clini_anim_style);
+        showFunctionx(context, view, R.style.popwin_from_bottom_anim_style);
     }
 
     /**
@@ -54,6 +54,7 @@ public class GrayBackgroundPopFunction {
      * @param view    依赖View
      */
     public void fromTopShow(Context context, View view) {
+        showFunctionx(context, view, R.style.popwin_from_top_anim_style);
     }
 
     /**
@@ -63,6 +64,7 @@ public class GrayBackgroundPopFunction {
      * @param view    依赖View
      */
     public void fromLeftShow(Context context, View view) {
+        showFunctionx(context, view, R.style.popwin_from_left_anim_style);
     }
 
     /**
@@ -72,6 +74,7 @@ public class GrayBackgroundPopFunction {
      * @param view    依赖View
      */
     public void fromRightShow(Context context, View view) {
+        showFunctionx(context, view, R.style.popwin_from_right_anim_style);
     }
 
     public void close() {
@@ -82,7 +85,7 @@ public class GrayBackgroundPopFunction {
     }
 
 
-    private void showFunctionx(Context context,View view ,int sytle){
+    private void showFunctionx(Context context, View view, int sytle) {
 
         // 获取自定义布局文件activity_popupwindow_left.xml的视图
         View popupWindow_view = View.inflate(context, R.layout.pop_progress_loading, null);
@@ -100,8 +103,8 @@ public class GrayBackgroundPopFunction {
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(
                 Color.TRANSPARENT));
         //设置动画
-        if (sytle==0){
-            sytle = R.style.popwin_chat_clini_anim_style;
+        if (sytle == 0) {
+            sytle = R.style.popwin_from_bottom_anim_style;
         }
         mPopupWindow.setAnimationStyle(sytle);
         //显示
