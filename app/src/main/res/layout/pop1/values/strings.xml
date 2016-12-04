@@ -4,5 +4,6 @@
     <string name="pop_from_top">PopWindown从顶部弹出</string>
     <string name="pop_from_left">PopWindown从左边弹出</string>
     <string name="pop_from_right">PopWindown从右边弹出</string>
+    <string name="dia_delete_base">删除信息</string>
 
 </resources>

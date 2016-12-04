@@ -23,6 +23,8 @@ public class MainActivity extends BaseActivity {
         popFromTopShowFunction();
         popFromRightShowFunction();
         popFromLeftShowFunction();
+
+
     }
 
     private Button mBackGroundGrayPopFromTopButton;

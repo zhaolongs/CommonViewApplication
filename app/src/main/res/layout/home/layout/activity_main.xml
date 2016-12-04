@@ -48,6 +48,13 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_background_selector"
                 android:text="@string/pop_from_right"/>
+            <Button
+                android:id="@+id/bt_dialog_base"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background_selector"
+                android:text="@string/dia_delete_base"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
