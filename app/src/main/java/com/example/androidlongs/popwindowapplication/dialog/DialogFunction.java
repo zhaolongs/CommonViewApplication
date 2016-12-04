@@ -14,6 +14,9 @@ import com.example.androidlongs.popwindowapplication.R;
  */
 
 public class DialogFunction {
+
+    private Dialog mAlertDialog;
+
     private DialogFunction() {
     }
 
@@ -27,7 +30,12 @@ public class DialogFunction {
 
 
     public void commonDeleteShow(Context context) {
-        Dialog alertDialog = new AlertDialog.Builder(context).
+
+        if (mAlertDialog != null) {
+            mAlertDialog.dismiss();
+            mAlertDialog = null;
+        }
+        mAlertDialog = new AlertDialog.Builder(context).
                 setTitle("确定删除？").
                 setMessage("您确定删除该条信息吗？").
                 setIcon(R.mipmap.ic_launcher).
@@ -46,6 +54,6 @@ public class DialogFunction {
                     }
                 }).
                 create();
-        alertDialog.show();
+        mAlertDialog.show();
     }
 }

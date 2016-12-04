@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.androidlongs.popwindowapplication.base.BaseActivity;
+import com.example.androidlongs.popwindowapplication.dialog.DialogFunction;
 import com.example.androidlongs.popwindowapplication.pop.GrayBackgroundPopFunction;
 
 public class MainActivity extends BaseActivity {
@@ -25,18 +26,23 @@ public class MainActivity extends BaseActivity {
         popFromLeftShowFunction();
 
 
+        dialogDeleteFunctionShow();
     }
+
 
     private Button mBackGroundGrayPopFromTopButton;
     private Button mBackGroundGrayPopFromBottomButton;
     private Button mBackGroundGrayPopFromLeftButton;
     private Button mBackGroundGrayPopFromRightButton;
+    private Button mAlertDeleteButton;
 
     private void initViewFunction() {
         mBackGroundGrayPopFromTopButton = (Button) findViewById(R.id.bt_pop_from_top);
         mBackGroundGrayPopFromBottomButton = (Button) findViewById(R.id.bt_pop_from_bottom);
         mBackGroundGrayPopFromLeftButton = (Button) findViewById(R.id.bt_pop_from_left);
         mBackGroundGrayPopFromRightButton = (Button) findViewById(R.id.bt_pop_from_right);
+        mAlertDeleteButton = (Button) findViewById(R.id.bt_dialog_base);
+
     }
 
     /***
@@ -88,5 +94,18 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    /**
+     *
+     */
+    private void dialogDeleteFunctionShow() {
+        mAlertDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFunction.getInstance().commonDeleteShow(MainActivity.this);
+            }
+        });
+
+
+    }
 
 }
