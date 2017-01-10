@@ -47,7 +47,7 @@
             android:fromAlpha="0.2"
             android:toAlpha="1.0"/>
     </set>
-####动画资源文件 pop_from_bottom_out.xml
+#### 动画资源文件 pop_from_bottom_out.xml
     <?xml version="1.0" encoding="utf-8"?>
     <set xmlns:android="http://schemas.android.com/apk/res/android">
 
