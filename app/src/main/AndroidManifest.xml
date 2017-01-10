@@ -20,6 +20,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".button.AnimationTestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <meta-data android:name="com.example.androidlongs.popwindowapplication.img.glide.GlideConfiguration"
                    android:value="GlideModule"/>
     </application>

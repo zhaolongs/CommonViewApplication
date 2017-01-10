@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.1'
 
     defaultConfig {
         applicationId "com.example.androidlongs.popwindowapplication"
@@ -27,6 +27,7 @@ android {
                     'src/main/res',
                     'src/main/res/layout',
                     'src/main/res/layout/base',
+                    'src/main/res/layout/button',
                     'src/main/res/layout/home',
                     'src/main/res/layout/pop1'
             ]
@@ -34,10 +35,17 @@ android {
         }
     }
 
+    dexOptions {
+        incremental false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.github.bumptech.glide:glide:3.5.2'

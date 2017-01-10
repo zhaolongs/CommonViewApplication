@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AnimationButton">
+        <attr name="backGroundColor" format="color" />
+        <attr name="backGroundDownColor" format="color" />
+        <attr name="buttonTextColor" format="color" />
+        <attr name="backGroundRoundRx" format="dimension" />
+        <attr name="backGroundRoundRy" format="dimension" />
+        <attr name="backGroundRoundColor" format="color" />
+    </declare-styleable>
+</resources>

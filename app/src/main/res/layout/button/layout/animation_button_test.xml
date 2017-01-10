@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:button="http://schemas.android.com/apk/res-auto"
+
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#000000"
+              android:orientation="vertical">
+
+    <com.example.androidlongs.popwindowapplication.button.AnimationButton
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="animation button"
+        button:backGroundColor="#4d8c46"
+        button:backGroundDownColor="#29801f"
+        button:backGroundRoundColor="#669939"
+        button:buttonTextColor="#eeeff1"
+        button:backGroundRoundRx="10dp"
+        button:backGroundRoundRy="10dp"
+        android:textColor="#232323"/>
+    <com.example.androidlongs.popwindowapplication.button.AnimationButton
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="animation button"
+        button:backGroundColor="#f9faf9"
+        button:backGroundDownColor="#d2d2d2"
+        button:backGroundRoundColor="#8a8b8a"
+        button:buttonTextColor="#19191a"
+        button:backGroundRoundRx="10dp"
+        button:backGroundRoundRy="10dp"
+        android:textColor="#232323"/>
+
+    <com.example.androidlongs.popwindowapplication.button.AnimationButton
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="animation button"
+        button:backGroundColor="#343de6"
+        button:backGroundDownColor="#2930c4"
+        button:backGroundRoundColor="#2e36ce"
+        button:buttonTextColor="#fff"
+        button:backGroundRoundRx="10dp"
+        button:backGroundRoundRy="10dp"
+        android:textColor="#232323"/>
+
+</LinearLayout>
