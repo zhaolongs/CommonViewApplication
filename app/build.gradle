@@ -29,6 +29,8 @@ android {
                     'src/main/res/layout/base',
                     'src/main/res/layout/button',
                     'src/main/res/layout/home',
+                    'src/main/res/layout/pie' ,
+                    'src/main/res/layout/path' ,
                     'src/main/res/layout/pop1'
             ]
 

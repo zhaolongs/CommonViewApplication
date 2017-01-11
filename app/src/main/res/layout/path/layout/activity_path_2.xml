@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:button="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<TextView
+    android:textSize="15sp"
+    android:textColor="#000"
+    android:text="三阶曲线图"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content"/>
+    <com.example.androidlongs.popwindowapplication.button.AnimationButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:text="切换控制点"
+        button:backGroundDownColor="#5b78f1"
+        button:buttonTextColor="#fff"
+        button:backGroundColor="#6e88f4"
+        button:backGroundRoundColor="#4063f2"
+        button:backGroundRoundRx="10dp"
+        button:backGroundRoundRy="10dp"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content"/>
+    <com.example.androidlongs.popwindowapplication.path.base2.PathBase2View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pathBase2"/>
+</LinearLayout>
