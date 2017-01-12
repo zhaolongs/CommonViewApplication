@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleProgressView">
+        <!--加载圆圈的进度颜色-->
+        <attr name="circleColor" format="color" />
+        <attr name="circleStartColor" format="color" />
+        <attr name="circleCenterColor" format="color" />
+        <attr name="circleEndColor" format="color" />
+        <!--加载圆圈的背景颜色-->
+        <attr name="circleBackgroundColor" format="color" />
+        <!--加载圆圈的宽度-->
+        <attr name="circleWidth" format="dimension" />
+        <!--加载圆圈显示大小 半径-->
+        <attr name="circleRadius" format="dimension" />
+        <!--加载圆圈 转动一周所用时间-->
+        <attr name="circleProgressDuration" format="integer" />
+        <!--加载圆圈中间点大小-->
+        <attr name="circlePointSize" format="dimension"/>
+        <!--加载圆圈中间点颜色-->
+        <attr name="circlePointColor" format="color"/>
+
+        <!--加载圆圈中间显示文本-->
+        <attr name="cicrleProgressWaitText" format="string"/>
+        <attr name="cicrleProgressWaitTextColor" format="color"/>
+        <attr name="cicrleProgressWaitTextSize" format="dimension"/>
+
+        <!--加载圆圈背景颜色-->
+        <attr name="isShowCircleBackground" format="boolean"/>
+        <!--是否显示加载等待点-->
+        <attr name="isShowCirclePoint" format="boolean"/>
+
+
+        <!--显示进度文字颜色-->
+        <attr name="progressTextColor" format="color" />
+        <!--显示进度文字大小-->
+        <attr name="progressTextSize" format="dimension" />
+    </declare-styleable>
+</resources>

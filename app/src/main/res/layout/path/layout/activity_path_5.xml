@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="三阶曲线图"
+        android:textColor="#000"
+        android:textSize="15sp"/>
+
+    <com.example.androidlongs.popwindowapplication.path.base5.PathBase5View
+        android:id="@+id/pathBase5"
+
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="#eee"
+        />
+</LinearLayout>
