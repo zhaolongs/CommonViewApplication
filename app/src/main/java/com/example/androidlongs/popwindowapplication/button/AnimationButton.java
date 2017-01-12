@@ -76,14 +76,54 @@ public class AnimationButton extends Button {
         //设置刷新接口
         mDrawable.setCallback(this);
 
+        setBackgroundDrawable(null);
         //设置按钮文字颜色
         setTextColor(mTextColor);
 
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int widthMeasuer = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+        int heightMeasuer = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        /**
+         *
+         * 依据specMode的值，（MeasureSpec有3种模式分别是UNSPECIFIED, EXACTLY和AT_MOST）
+         * 如果是AT_MOST，specSize 代表的是最大可获得的空间；
+         * 如果是EXACTLY，specSize 代表的是精确的尺寸；
+         * 如果是UNSPECIFIED，对于控件尺寸来说，没有任何参义。
+         */
+
+        int widthSizeDefaul = 88;
+        int heightSizeDefaul = 42;
+
+        if (widthMeasuer == MeasureSpec.AT_MOST || widthMeasuer == MeasureSpec.EXACTLY) {
+            widthSizeDefaul = widthSize;
+        }
+
+        if (heightMeasuer == MeasureSpec.AT_MOST || heightMeasuer == MeasureSpec.EXACTLY) {
+            heightSizeDefaul = heightSize;
+        }
+
+
+        setMeasuredDimension(widthSizeDefaul, heightSizeDefaul);
+
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
-        mDrawable.draw(canvas);
+        if (mDrawable != null) {
+            mDrawable.draw(canvas);
+        }
+        if (canvas == null) {
+            return;
+        }
         super.onDraw(canvas);
     }
 

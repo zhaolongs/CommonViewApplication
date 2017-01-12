@@ -166,11 +166,7 @@ public class CircleProgressView extends View {
         }
 
 
-        int[] sweepColorArr = new int[mCircleArr.size()];
-        for (int i = 0; i < mCircleArr.size(); i++) {
-            sweepColorArr[i] = mCircleArr.get(i);
-        }
-        mSweepGradient = new SweepGradient(0, 0, sweepColorArr, null);
+        addSweppColorFunction();
         mPaint = new Paint();
         //设置抗锯齿
         mPaint.setAntiAlias(true);
@@ -401,14 +397,34 @@ public class CircleProgressView extends View {
     }
 
 
-    public void addCircleSweepColor(int color){
-        addCircleSweepColor(color,false);
+    public void addCircleSweepColor(int color) {
+        addCircleSweepColor(color, false);
+    }
+
+    public void clearCircleSweepColor() {
+        //清空颜色组
+        mCircleArr.clear();
+        mCircleArr.add(Color.BLUE);
+        mCircleArr.add(Color.BLUE);
+        //重新设置渐变颜色组
+        addSweppColorFunction();
+    }
+
+    /**
+     * 重新设置渐变颜色组
+     */
+    private void addSweppColorFunction() {
+        int[] sweepColorArr = new int[mCircleArr.size()];
+        for (int i = 0; i < mCircleArr.size(); i++) {
+            sweepColorArr[i] = mCircleArr.get(i);
+        }
+        mSweepGradient = new SweepGradient(0, 0, sweepColorArr, null);
     }
 
     /**
      * @param flag true 为清空以前的颜色
      */
-    public void addCircleSweepColor(int color,boolean flag){
+    public void addCircleSweepColor(int color, boolean flag) {
         if (mCircleArr == null) {
             mCircleArr = new ArrayList<>();
         }
@@ -416,13 +432,14 @@ public class CircleProgressView extends View {
             mCircleArr.clear();
         }
         mCircleArr.add(color);
-
-        int[] sweepColorArr = new int[mCircleArr.size()];
-        for (int i = 0; i < mCircleArr.size(); i++) {
-            sweepColorArr[i] = mCircleArr.get(i);
-        }
-        mSweepGradient = new SweepGradient(0, 0, sweepColorArr, null);
+        //重新设置渐变颜色组
+        addSweppColorFunction();
     }
+
+    public List<Integer> getSweepColorList() {
+        return mCircleArr;
+    }
+
 
     //结束加载
     public void close() {
@@ -434,6 +451,53 @@ public class CircleProgressView extends View {
         mValueAnimator.cancel();
         //最后一次刷新
         invalidate();
+    }
+
+    public void stop() {
+        if (mValueAnimator.isStarted()) {
+            //完成标识
+            this.mIsClose = true;
+            //
+            this.mAnimatorValue = 0.5f;
+            this.mIsShowCirclePoint = true;
+            //完成文字
+            mCurrentProgressText = "";
+            //结束更新
+            mValueAnimator.cancel();
+            //最后一次刷新
+            invalidate();
+        }
+    }
+
+    public void start() {
+        if (!mValueAnimator.isStarted()) {
+            //完成标识
+            this.mIsClose = false;
+            this.mIsShowCirclePoint = true;
+            //完成文字
+            mCurrentProgressText = "";
+            //结束更新
+            mValueAnimator.start();
+            //最后一次刷新
+            invalidate();
+        }
+    }
+
+    public void addrotationalSpeed(){
+        if(mCircleProgressDuration<200){
+            mCircleProgressDuration = 280;
+        }else {
+            mCircleProgressDuration -= 200;
+        }
+        mValueAnimator.setDuration(mCircleProgressDuration);
+    }
+    public void reduceRotationalSpeed(){
+        if(mCircleProgressDuration>5000){
+            mCircleProgressDuration = 5000;
+        }else {
+            mCircleProgressDuration += 200;
+        }
+        mValueAnimator.setDuration(mCircleProgressDuration);
     }
 }
 

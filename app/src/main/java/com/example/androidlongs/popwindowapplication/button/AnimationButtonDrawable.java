@@ -51,6 +51,11 @@ public class AnimationButtonDrawable extends Drawable {
     @Override
     public void draw(Canvas canvas) {
 
+        if (canvas == null) {
+            return;
+        }
+
+        canvas.save();
         //绘制区域
         int canvasWidth = canvas.getWidth();
         int canvasHeight = canvas.getHeight();
@@ -71,8 +76,9 @@ public class AnimationButtonDrawable extends Drawable {
         canvas.drawCircle(mCirculX, mCirculY, mCirculRadus, mPaint);
 
         //最后将画笔去除Xfermode
-        mPaint.setXfermode(null);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         canvas.restoreToCount(layerId);
+
     }
 
     @Override
@@ -135,6 +141,12 @@ public class AnimationButtonDrawable extends Drawable {
         invalidateSelf();
         //判断点击操作
         switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_MASK:
+                mBackGroundColor = Color.RED;
+                break;
+            case MotionEvent.ACTION_HOVER_EXIT:
+                mBackGroundColor = mBackGroundNormalColor;
+                break;
             case MotionEvent.ACTION_DOWN:
                 onTouchDown(event.getX(), event.getY());
                 break;
