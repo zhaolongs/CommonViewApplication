@@ -2,18 +2,18 @@
 <resources>
     <declare-styleable name="CircleProgressView">
         <!--加载圆圈的进度颜色-->
-        <attr name="circleColor" format="color" />
-        <attr name="circleStartColor" format="color" />
-        <attr name="circleCenterColor" format="color" />
-        <attr name="circleEndColor" format="color" />
+        <attr name="circleColor" format="color"/>
+        <attr name="circleStartColor" format="color"/>
+        <attr name="circleCenterColor" format="color"/>
+        <attr name="circleEndColor" format="color"/>
         <!--加载圆圈的背景颜色-->
-        <attr name="circleBackgroundColor" format="color" />
+        <attr name="circleBackgroundColor" format="color"/>
         <!--加载圆圈的宽度-->
-        <attr name="circleWidth" format="dimension" />
+        <attr name="circleWidth" format="dimension"/>
         <!--加载圆圈显示大小 半径-->
-        <attr name="circleRadius" format="dimension" />
+        <attr name="circleRadius" format="dimension"/>
         <!--加载圆圈 转动一周所用时间-->
-        <attr name="circleProgressDuration" format="integer" />
+        <attr name="circleProgressDuration" format="integer"/>
         <!--加载圆圈中间点大小-->
         <attr name="circlePointSize" format="dimension"/>
         <!--加载圆圈中间点颜色-->
@@ -31,8 +31,47 @@
 
 
         <!--显示进度文字颜色-->
-        <attr name="progressTextColor" format="color" />
+        <attr name="progressTextColor" format="color"/>
         <!--显示进度文字大小-->
-        <attr name="progressTextSize" format="dimension" />
+        <attr name="progressTextSize" format="dimension"/>
+
+
+        <attr name="animationType">
+            <flag name="defaul" value="1" />
+            <flag name="roate_x" value="2" />
+            <flag name="roate_y" value="3" />
+            <flag name="roate_x_y" value="4" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FindPathView">
+
+
+        <attr name="typeModel">
+            <flag name="defaul" value="1" />
+            <flag name="leve1" value="2" />
+            <flag name="leve2" value="3" />
+            <flag name="leve3_anmation_y_restart" value="4" />
+            <flag name="leve3_anmation_y_reserve" value="5" />
+        </attr>
+
+        <!--加载圆圈的进度颜色-->
+        <attr name="findColor" format="color"/>
+        <!--加载圆圈的背景颜色-->
+        <attr name="findBackgroundColor" format="color"/>
+        <!--加载圆圈的半径-->
+        <attr name="findCicrleRadius" format="dimension"/>
+        <!--加载圆圈的宽度-->
+        <attr name="findCicrleWidth" format="dimension"/>
+
+        <!--加载时间的宽度-->
+        <attr name="findCicrleDuation" format="integer"/>
+
+
+        <!--加载圆圈的中心圆点-->
+        <attr name="isShowCenterOrigin" format="boolean"/>
+        <attr name="findCenterOriginColor" format="color"/>
+        <!--显示坐标-->
+        <attr name="isShowcoord" format="boolean"/>
     </declare-styleable>
 </resources>

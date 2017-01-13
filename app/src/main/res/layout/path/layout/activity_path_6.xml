@@ -327,6 +327,86 @@
             </LinearLayout>
 
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.example.androidlongs.popwindowapplication.path.common.CircleProgressView
+                    android:id="@+id/pathBase6_9"
+
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="#eee"
+                    button:circleCenterColor="#edca6e"
+                    button:circleColor="#01015e"
+                    button:circleEndColor="#9c2c35"
+                    button:circlePointColor="#0101ac"
+
+                    button:circlePointSize="4dp"
+                    button:circleProgressDuration="3000"
+                    button:circleRadius="20dp"
+                    button:circleStartColor="#b34ce4"
+                    button:circleWidth="4dp"
+                    button:isShowCirclePoint="true"
+
+                    button:animationType="roate_y"
+
+                    />
+
+                <com.example.androidlongs.popwindowapplication.path.common.CircleProgressView
+                    android:id="@+id/pathBase6_10"
+
+                    android:layout_marginLeft="18dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="#eee"
+                    button:circleCenterColor="#edca6e"
+                    button:circleColor="#01015e"
+                    button:circleEndColor="#9c2c35"
+                    button:circlePointColor="#0101ac"
+
+                    button:circlePointSize="4dp"
+                    button:circleProgressDuration="3000"
+                    button:circleRadius="20dp"
+                    button:circleStartColor="#b34ce4"
+                    button:circleWidth="4dp"
+                    button:isShowCirclePoint="true"
+
+                    button:animationType="roate_x"
+
+                    />
+                <com.example.androidlongs.popwindowapplication.path.common.CircleProgressView
+                    android:id="@+id/pathBase6_11"
+
+                    android:layout_marginLeft="18dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="#eee"
+                    button:circleCenterColor="#edca6e"
+                    button:circleColor="#01015e"
+                    button:circleEndColor="#9c2c35"
+                    button:circlePointColor="#0101ac"
+
+                    button:circlePointSize="4dp"
+                    button:circleProgressDuration="3000"
+                    button:circleRadius="20dp"
+                    button:circleStartColor="#b34ce4"
+                    button:circleWidth="4dp"
+                    button:isShowCirclePoint="true"
+
+                    button:animationType="roate_x_y"
+
+                    />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -4,8 +4,10 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -117,6 +119,20 @@ public class CircleProgressView extends View {
     //是否结束加载
     private boolean mIsClose = false;
 
+
+    //起始时角度
+    private float mFromDegrees;
+    private Camera mCamera;
+    float scale = 1;    // <------- 像素密度
+    private Matrix mMatrix;
+
+
+    private enum AnimationType {
+        DEFAUL, ROATE_X, ROATE_Y,ROATE_X_Y
+    }
+
+    private AnimationType mCurrentAnimationType = AnimationType.DEFAUL;
+
     private void initFunction(Context context, AttributeSet attrs, int defStyleAttr) {
 
         if (attrs != null) {
@@ -163,9 +179,29 @@ public class CircleProgressView extends View {
             if (!TextUtils.isEmpty(mProgressWaitText)) {
                 mIsShowCirclePoint = false;
             }
+
+
+            int animation = typedArray.getInt(R.styleable.CircleProgressView_animationType, 1);
+            switch (animation) {
+                case 1:
+                    mCurrentAnimationType = AnimationType.DEFAUL;
+                    break;
+                case 2:
+                    mCurrentAnimationType = AnimationType.ROATE_X;
+                    break;
+                case 3:
+                    mCurrentAnimationType = AnimationType.ROATE_Y;
+                    break;
+                case 4:
+                    mCurrentAnimationType = AnimationType.ROATE_X_Y;
+                    break;
+
+            }
         }
 
 
+        mCamera = new Camera();
+        mMatrix = new Matrix();
         addSweppColorFunction();
         mPaint = new Paint();
         //设置抗锯齿
@@ -240,7 +276,34 @@ public class CircleProgressView extends View {
         super.onDraw(canvas);
         canvas.translate(mWidth / 2, mHeigth / 2);
 
+        if (mCurrentAnimationType == AnimationType.DEFAUL) {
 
+        } else if (mCurrentAnimationType == AnimationType.ROATE_X) {
+            mCamera.save();
+            mFromDegrees = mAnimatorValue * 360;
+            mCamera.rotateX(mFromDegrees);
+            mCamera.getMatrix(mMatrix);
+
+            canvas.concat(mMatrix);
+        } else if (mCurrentAnimationType == AnimationType.ROATE_Y) {
+            mCamera.save();
+            mFromDegrees = mAnimatorValue * 360;
+            mCamera.rotateY(mFromDegrees);
+            mCamera.getMatrix(mMatrix);
+
+            canvas.concat(mMatrix);
+
+        }
+        else if (mCurrentAnimationType == AnimationType.ROATE_X_Y) {
+            mCamera.save();
+            mFromDegrees = mAnimatorValue * 360;
+            mCamera.rotateY(mFromDegrees);
+            mCamera.rotateX(mFromDegrees);
+            mCamera.getMatrix(mMatrix);
+
+            canvas.concat(mMatrix);
+
+        }
         //绘制等待点
         mPaint.setStrokeWidth(mCirclePointSize);
 
@@ -346,6 +409,9 @@ public class CircleProgressView extends View {
         //绘制path
         canvas.drawPath(mDst, mPaint);
         mPaint.setShader(null);
+        if (mCurrentAnimationType != AnimationType.DEFAUL) {
+            mCamera.restore();
+        }
 
     }
 
@@ -483,18 +549,19 @@ public class CircleProgressView extends View {
         }
     }
 
-    public void addrotationalSpeed(){
-        if(mCircleProgressDuration<200){
+    public void addrotationalSpeed() {
+        if (mCircleProgressDuration < 200) {
             mCircleProgressDuration = 280;
-        }else {
+        } else {
             mCircleProgressDuration -= 200;
         }
         mValueAnimator.setDuration(mCircleProgressDuration);
     }
-    public void reduceRotationalSpeed(){
-        if(mCircleProgressDuration>5000){
+
+    public void reduceRotationalSpeed() {
+        if (mCircleProgressDuration > 5000) {
             mCircleProgressDuration = 5000;
-        }else {
+        } else {
             mCircleProgressDuration += 200;
         }
         mValueAnimator.setDuration(mCircleProgressDuration);
