@@ -242,6 +242,7 @@ public class FindPathView extends View {
                                 break;
                             case DEFAUL_LINE:
                                 mCurrentModel = ANIMATION_Y;
+                                mValueAnimator.setDuration(mDuration*2);
                                 break;
                         }
                         break;
