@@ -37,10 +37,10 @@
 
 
         <attr name="animationType">
-            <flag name="defaul" value="1" />
-            <flag name="roate_x" value="2" />
-            <flag name="roate_y" value="3" />
-            <flag name="roate_x_y" value="4" />
+            <flag name="defaul" value="1"/>
+            <flag name="roate_x" value="2"/>
+            <flag name="roate_y" value="3"/>
+            <flag name="roate_x_y" value="4"/>
         </attr>
     </declare-styleable>
 
@@ -48,11 +48,11 @@
 
 
         <attr name="typeModel">
-            <flag name="defaul" value="1" />
-            <flag name="leve1" value="2" />
-            <flag name="leve2" value="3" />
-            <flag name="leve3_anmation_y_restart" value="4" />
-            <flag name="leve3_anmation_y_reserve" value="5" />
+            <flag name="defaul" value="1"/>
+            <flag name="leve1" value="2"/>
+            <flag name="leve2" value="3"/>
+            <flag name="leve3_anmation_y_restart" value="4"/>
+            <flag name="leve3_anmation_y_reserve" value="5"/>
         </attr>
 
         <!--加载圆圈的进度颜色-->
@@ -73,5 +73,25 @@
         <attr name="findCenterOriginColor" format="color"/>
         <!--显示坐标-->
         <attr name="isShowcoord" format="boolean"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="PathCoreView">
+
+
+        <!--半径 -->
+        <attr name="core_radius" format="dimension"/>
+        <!--颜色 -->
+        <attr name="core_color" format="color"/>
+        <!--展开时间 -->
+        <attr name="explor_duration" format="integer"/>
+        <!--旋转速度 -->
+        <attr name="typeSpeed">
+            <flag name="defaul_speed" value="1"/>
+            <flag name="low_speed" value="2"/>
+            <flag name="middle_speed" value="3"/>
+            <flag name="fast_speed" value="4"/>
+            <flag name="very_fast_speed" value="5"/>
+        </attr>
     </declare-styleable>
 </resources>

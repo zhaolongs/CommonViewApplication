@@ -1,0 +1,370 @@
+package com.example.androidlongs.popwindowapplication.path.base8;
+
+import android.animation.Animator;
+import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Camera;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
+
+import com.example.androidlongs.popwindowapplication.R;
+
+/**
+ * Created by androidlongs on 17/1/11.
+ * 站在顶峰，看世界
+ * 落在谷底，思人生
+ */
+
+public class PathCoreView extends View {
+    private ValueAnimator mValueAnimator;
+    private long mCircleProgressDuration = 1000;
+    private float mAnimatorValue;
+    private Path mPath, mPath1;
+
+
+    //起始时角度
+    private float mFromDegrees;
+    private Camera mCamera;
+    float scale = 1;    // <------- 像素密度
+    private Matrix mMatrix;
+    private int mWidth;
+    private int mHeight;
+    private RectF mBorderRectF;
+
+    public PathCoreView(Context context) {
+        super(context);
+        initFunction(context, null, 0);
+    }
+
+    public PathCoreView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initFunction(context, attrs, 0);
+    }
+
+    public PathCoreView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initFunction(context, attrs, defStyleAttr);
+    }
+
+
+    private Paint mPaint;
+    private int centerX, centerY;
+
+    private int mRadius = 60;
+    private int mRadiusFlag = 5;
+    private int mCircleWidth = 4;
+    private int mTrlateHeight = mRadius * 2 + mRadiusFlag;
+
+
+
+    private int mNumber = 0;
+
+    private int mCoreColor= Color.RED;
+
+
+    private void initFunction(Context context, AttributeSet attrs, int defStyleAttr) {
+
+
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs,
+                    R.styleable.PathCoreView);
+
+            //半径
+            mRadius = typedArray.getDimensionPixelOffset(R.styleable.PathCoreView_core_radius,15);
+            setRadius(mRadius);
+
+            //颜色设置
+            mCoreColor = typedArray.getColor(R.styleable.PathCoreView_core_color,Color.RED);
+            //展开时间 设置
+            mCircleProgressDuration = typedArray.getInteger(R.styleable.PathCoreView_explor_duration,1000);
+            if (mCircleProgressDuration>4000){
+                mCircleProgressDuration =4000;
+            }
+
+            //自定义属性 旋转速度设置
+            int modelType = typedArray.getInt(R.styleable.FindPathView_typeModel, 1);
+            switch (modelType) {
+                case 1:
+                    setRoteSpeed(ROTE_SPEED.DEFAULE_SPEED);
+                    break;
+                case 2:
+                    setRoteSpeed(ROTE_SPEED.LOW_SPEED);
+                    break;
+                case 3:
+                    setRoteSpeed(ROTE_SPEED.MIDDIL_SPEED);
+                    break;
+                case 4:
+                    setRoteSpeed(ROTE_SPEED.FAST_SPEED);
+                    break;
+                case 5:
+                    setRoteSpeed(ROTE_SPEED.VERY_FAST_SPEED);
+                    break;
+            }
+        }
+
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+        mPaint.setColor(mCoreColor);
+        mPaint.setStrokeWidth(mCircleWidth);
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setTextSize(60);
+
+
+        mPath = new Path();
+        mPath1 = new Path();
+
+        mCamera = new Camera();
+        mMatrix = new Matrix();
+
+
+        mBorderRectF = new RectF(-mWidth / 2 + mCircleWidth, -mRadius - mRadius, mWidth / 2 - mCircleWidth, mRadius + mRadius + mRadius * 2 / 3);
+
+        mValueAnimator = ValueAnimator.ofFloat(0, 1);
+        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                mAnimatorValue = (float) valueAnimator.getAnimatedValue();
+                invalidate();
+            }
+        });
+
+
+        mValueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                //切换绘制颜色
+
+                mNumber++;
+
+            }
+        });
+        mValueAnimator.setDuration(mCircleProgressDuration);
+        mValueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mValueAnimator.setInterpolator(new LinearInterpolator());
+        mValueAnimator.start();
+
+
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        mWidth = w;
+        mHeight = h;
+        centerX = 0;
+        centerY = 0;
+
+        mPath.moveTo(0, -mRadius / 2);
+        //1
+        mPath.cubicTo(mRadius / 2, -mRadius, mRadius, -mRadius / 2, mRadius, 0);
+        //2
+        mPath.cubicTo(mRadius, mRadius / 2, mRadius / 2, mRadius, 0, mRadius + mRadiusFlag);
+        //3
+        mPath.cubicTo(-mRadius / 2, mRadius, -mRadius, mRadius / 2, -mRadius, 0);
+        //4
+        mPath.cubicTo(-mRadius, -mRadius / 2, -mRadius / 2, -mRadius, 0, -mRadius / 2);
+
+        mPath.close();
+
+
+        mPath1.moveTo(0, -mRadius / 2 - mTrlateHeight);
+        //1
+        mPath1.cubicTo(mRadius / 2, -mRadius - mTrlateHeight, mRadius, -mRadius / 2 - mTrlateHeight, mRadius, 0 - mTrlateHeight);
+        //2
+        mPath1.cubicTo(mRadius, mRadius / 2 - mTrlateHeight, mRadius / 2, mRadius - mTrlateHeight, 0, mRadius + mRadiusFlag - mTrlateHeight);
+        //3
+        mPath1.cubicTo(-mRadius / 2, mRadius - mTrlateHeight, -mRadius, mRadius / 2 - mTrlateHeight, -mRadius, 0 - mTrlateHeight);
+        //4
+        mPath1.cubicTo(-mRadius, -mRadius / 2 - mTrlateHeight, -mRadius / 2, -mRadius - mTrlateHeight, 0, -mRadius / 2 - mTrlateHeight);
+
+        mPath1.close();
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // 根据触摸位置更新控制点，并提示重绘
+
+        return true;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        canvas.save();
+        //移动画布中心
+        canvas.translate(mWidth / 2, mHeight / 2);
+
+        if (mNumber == 0) {
+            canvas.translate(0, -mTrlateHeight);
+            canvas.scale(mAnimatorValue, mAnimatorValue);
+            canvas.drawPath(mPath, mPaint);
+        } else if (mNumber == 1) {
+            if (mAnimatorValue == 1) {
+                mAnimatorValue = 0;
+            }
+            canvas.rotate(90 * mAnimatorValue, 0, 0);
+            canvas.drawPath(mPath1, mPaint);
+
+            canvas.rotate(-90 * mAnimatorValue, 0, 0);
+            canvas.translate(0, -mTrlateHeight);
+            canvas.drawPath(mPath, mPaint);
+
+        } else if (mNumber == 2) {
+            if (mAnimatorValue == 1) {
+                mAnimatorValue = 0;
+            }
+            canvas.rotate(90, 0, 0);
+            canvas.drawPath(mPath1, mPaint);
+
+            canvas.rotate(90 * mAnimatorValue, 0, 0);
+            canvas.drawPath(mPath1, mPaint);
+
+            canvas.rotate(-90, 0, 0);
+            canvas.rotate(-90 * mAnimatorValue, 0, 0);
+            canvas.translate(0, -mTrlateHeight);
+            canvas.drawPath(mPath, mPaint);
+
+        } else if (mNumber == 3) {
+            if (mAnimatorValue == 1) {
+                mAnimatorValue = 0;
+            }
+            canvas.rotate(90, 0, 0);
+            canvas.drawPath(mPath1, mPaint);
+
+            canvas.rotate(90, 0, 0);
+            canvas.drawPath(mPath1, mPaint);
+
+            canvas.rotate(90 * mAnimatorValue, 0, 0);
+            canvas.drawPath(mPath1, mPaint);
+
+            canvas.rotate(-90, 0, 0);
+            canvas.rotate(-90, 0, 0);
+            canvas.rotate(-90 * mAnimatorValue, 0, 0);
+            canvas.translate(0, -mTrlateHeight);
+            canvas.drawPath(mPath, mPaint);
+
+        } else {
+
+            if (mNumber >= 5) {
+                mNumber = 5;
+            }
+
+            canvas.rotate(mFromDegrees);
+
+            mPath1.reset();
+            float scalFlag;
+            if (mAnimatorValue > 0.5) {
+                scalFlag = (float) (-mRadius * (mAnimatorValue - 0.5));
+            } else {
+                scalFlag = mRadius * mAnimatorValue;
+            }
+
+
+            mPath1.moveTo(0, -mRadius / 2 - mTrlateHeight + scalFlag);
+            //1
+            mPath1.cubicTo(mRadius / 2, -mRadius - mTrlateHeight + scalFlag, mRadius, -mRadius / 2 - mTrlateHeight + scalFlag, mRadius, 0 - mTrlateHeight + scalFlag);
+            //2
+            mPath1.cubicTo(mRadius, mRadius / 2 - mTrlateHeight + scalFlag, mRadius / 2, mRadius - mTrlateHeight + scalFlag, 0, mRadius + mRadiusFlag - mTrlateHeight + scalFlag);
+            //3
+            mPath1.cubicTo(-mRadius / 2, mRadius - mTrlateHeight + scalFlag, -mRadius, mRadius / 2 - mTrlateHeight + scalFlag, -mRadius, 0 - mTrlateHeight + scalFlag);
+            //4
+            mPath1.cubicTo(-mRadius, -mRadius / 2 - mTrlateHeight + scalFlag, -mRadius / 2, -mRadius - mTrlateHeight + scalFlag, 0, -mRadius / 2 - mTrlateHeight + scalFlag);
+
+            mPath1.close();
+
+
+            for (int i = 0; i < mNumber; i++) {
+                canvas.rotate(90, 0, 0);
+                canvas.drawPath(mPath1, mPaint);
+
+            }
+            mFromDegrees += mCurrentSpeed;
+
+        }
+
+        canvas.restore();
+
+    }
+
+    private float mCurrentSpeed = 1f;
+
+    public enum ROTE_SPEED {
+        DEFAULE_SPEED, LOW_SPEED, MIDDIL_SPEED, FAST_SPEED, VERY_FAST_SPEED;
+    }
+
+    /**
+     * 设置旋转速度
+     */
+    public void setRoteSpeed(ROTE_SPEED speed) {
+        switch (speed) {
+            case DEFAULE_SPEED:
+                mCurrentSpeed = 1;
+                break;
+            case LOW_SPEED:
+                mCurrentSpeed = 0.5f;
+                break;
+            case MIDDIL_SPEED:
+                mCurrentSpeed = 1.5f;
+                break;
+            case FAST_SPEED:
+                mCurrentSpeed = 2f;
+                break;
+            case VERY_FAST_SPEED:
+                mCurrentSpeed = 2.5f;
+                break;
+            default:
+                mCurrentSpeed = 1f;
+                break;
+        }
+
+    }
+
+    /**
+     * 半径设置
+     */
+    public void setRadius(int radius){
+        mRadius = radius;
+        mTrlateHeight=mRadius * 2 + mRadiusFlag;
+    }
+    /**
+     * 颜色设置
+     */
+    public void setCoreColor(int color){
+        mCoreColor=color;
+    }
+    /**
+     * 展开时间 设置
+     */
+    public void setCircleProgressDuration(int duration){
+        mCircleProgressDuration = duration;
+    }
+}
+

@@ -55,6 +55,13 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_background_selector"
                 android:text="@string/dia_delete_base"/>
+            <Button
+                android:id="@+id/bt_path_view_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background_selector"
+                android:text="爱心静态"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

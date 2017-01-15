@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:core="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="baseview 8"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
+            android:id="@+id/pathBase8"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
+            android:id="@+id/pathBase"
+            core:core_color="#e65454"
+            core:typeSpeed="fast_speed"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="12dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
+
+            core:typeSpeed="middle_speed"
+            core:explor_duration="800"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
+            core:core_color="#6246e1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="12dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
+
+            core:explor_duration="1600"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
+
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="12dp"/>
+    </LinearLayout>
+
+</LinearLayout>
