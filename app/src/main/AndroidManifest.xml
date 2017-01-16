@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".PopActivity"/>
         <activity android:name=".path.base8.PathTest8Activity"/>
+        <activity android:name=".path.base8.PathCoreMainActivity"/>
 
         <meta-data android:name="com.example.androidlongs.popwindowapplication.img.glide.GlideConfiguration"
                    android:value="GlideModule"/>

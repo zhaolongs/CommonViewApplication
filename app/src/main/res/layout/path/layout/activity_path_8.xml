@@ -14,12 +14,14 @@
         android:text="baseview 8"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center_horizontal">
 
         <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
             android:id="@+id/pathBase8"
+            android:background="#cfcece"
             android:layout_width="150dp"
             android:layout_height="150dp"/>
 
@@ -62,7 +64,8 @@
 
             core:explor_duration="1600"
             android:layout_width="150dp"
-            android:layout_height="150dp"/>
+            android:layout_height="150dp"
+            android:id="@+id/pathCoreView"/>
 
         <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
 

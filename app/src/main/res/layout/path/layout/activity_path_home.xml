@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#ff282fed"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爱心提示"
+            android:textColor="#fff"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
+
+        android:id="@+id/pcv_main"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        custom:core_color="#ec3f3f"
+        custom:core_radius="18dp"
+        custom:explor_duration="2000"
+        custom:typeSpeed="fast_speed"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+
+            <com.example.androidlongs.popwindowapplication.button.AnimationButton
+                android:id="@+id/bt_switch_color_core_main"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="8dp"
+                android:text="切换一个变态的颜色"
+                android:textSize="14sp"
+                custom:backGroundColor="#cc71ea"
+                custom:backGroundDownColor="#c75bea"
+                custom:backGroundRoundColor="#c75bea"
+                custom:backGroundRoundRx="8dp"
+                custom:backGroundRoundRy="8dp"
+                custom:buttonTextColor="#fff"/>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_switch_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bt_switch_color_core_main"
+                android:layout_marginTop="8dp">
+
+                <com.example.androidlongs.popwindowapplication.button.AnimationButton
+
+                    android:id="@+id/bt_switch_speed_core_main"
+                    android:layout_width="200dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="切换一个异样的速度"
+                    android:textSize="14sp"
+                    custom:backGroundColor="#cc71ea"
+                    custom:backGroundDownColor="#c75bea"
+                    custom:backGroundRoundColor="#c75bea"
+                    custom:backGroundRoundRx="8dp"
+                    custom:backGroundRoundRy="8dp"
+                    custom:buttonTextColor="#fff"/>
+
+                <com.example.androidlongs.popwindowapplication.button.AnimationButton
+
+                    android:id="@+id/bt_show_speed"
+                    android:layout_width="64dp"
+                    android:layout_height="36dp"
+                    android:layout_alignBaseline="@+id/bt_switch_speed_core_main"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@id/bt_switch_speed_core_main"
+                    android:text="默认速度"
+                    android:textSize="10sp"
+                    custom:backGroundColor="#4e44de"
+                    custom:backGroundDownColor="#4e44de"
+                    custom:backGroundRoundColor="#4e44de"
+                    custom:backGroundRoundRx="10dp"
+                    custom:backGroundRoundRy="10dp"
+                    custom:buttonTextColor="#fff"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_switch_speed"
+                android:layout_marginTop="8dp">
+
+                <com.example.androidlongs.popwindowapplication.button.AnimationButton
+
+                    android:id="@+id/bt_switch_explod_speed_core_main"
+                    android:layout_width="200dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="切换一个异样的展开"
+                    android:textSize="14sp"
+                    custom:backGroundColor="#cc71ea"
+                    custom:backGroundDownColor="#c75bea"
+                    custom:backGroundRoundColor="#c75bea"
+                    custom:backGroundRoundRx="8dp"
+                    custom:backGroundRoundRy="8dp"
+                    custom:buttonTextColor="#fff"/>
+
+                <com.example.androidlongs.popwindowapplication.button.AnimationButton
+
+                    android:id="@+id/bt_explod_show_speed"
+                    android:layout_width="64dp"
+                    android:layout_height="36dp"
+                    android:layout_alignBaseline="@+id/bt_switch_explod_speed_core_main"
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@id/bt_switch_explod_speed_core_main"
+                    android:text="默认速度"
+                    android:textSize="10sp"
+                    custom:backGroundColor="#4e44de"
+                    custom:backGroundDownColor="#4e44de"
+                    custom:backGroundRoundColor="#4e44de"
+                    custom:backGroundRoundRx="10dp"
+                    custom:backGroundRoundRy="10dp"
+                    custom:buttonTextColor="#fff"
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

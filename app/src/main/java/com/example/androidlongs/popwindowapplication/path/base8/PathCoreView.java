@@ -70,7 +70,7 @@ public class PathCoreView extends View {
 
     private int mCoreColor= Color.RED;
 
-
+private Context mContext;
     private void initFunction(Context context, AttributeSet attrs, int defStyleAttr) {
 
 
@@ -91,7 +91,7 @@ public class PathCoreView extends View {
             }
 
             //自定义属性 旋转速度设置
-            int modelType = typedArray.getInt(R.styleable.FindPathView_typeModel, 1);
+            int modelType = typedArray.getInt(R.styleable.PathCoreView_typeSpeed, 1);
             switch (modelType) {
                 case 1:
                     setRoteSpeed(ROTE_SPEED.DEFAULE_SPEED);
@@ -110,6 +110,8 @@ public class PathCoreView extends View {
                     break;
             }
         }
+
+        mContext = context;
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -206,7 +208,63 @@ public class PathCoreView extends View {
         mPath1.close();
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        /**
+         *
+         * 依据specMode的值，（MeasureSpec有3种模式分别是UNSPECIFIED, EXACTLY和AT_MOST）
+         * 如果是AT_MOST，specSize 代表的是最大可获得的空间；
+         * 如果是EXACTLY，specSize 代表的是精确的尺寸；
+         * 如果是UNSPECIFIED，对于控件尺寸来说，没有任何参义。
+         */
 
+        /**
+         * View默认的测量规则是android:layout_width和android:layout_height为match_parent或者wrap_content时，是填充全屏的
+         * android:layout_width和android:layout_height设置为具体值时，那么是多少，宽高就是多少
+         */
+
+        int width = 50;
+        if (MeasureSpec.getMode(widthMeasureSpec)==MeasureSpec.UNSPECIFIED){
+            width = 50;
+        }else {
+            width = MeasureSpec.getSize(widthMeasureSpec);
+        }
+
+        int height = 50;
+        if (MeasureSpec.getMode(widthMeasureSpec)==MeasureSpec.UNSPECIFIED){
+            height = 50;
+        }else {
+            height = MeasureSpec.getSize(heightMeasureSpec);
+        }
+
+        setMeasuredDimension(width,height);
+        //setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
+    }
+    private int measureWidth(int measureSpec) {
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        //设置一个默认值，就是这个View的默认宽度为500，这个看我们自定义View的要求
+        int result = 100;
+        if (specMode == MeasureSpec.AT_MOST) {//相当于我们设置为wrap_content
+            result = specSize;
+        } else if (specMode == MeasureSpec.EXACTLY) {//相当于我们设置为match_parent或者为一个具体的值
+            result = specSize;
+        }
+        return result;
+    }
+
+    private int measureHeight(int measureSpec) {
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        int result = 100;
+        if (specMode == MeasureSpec.AT_MOST) {
+            result = specSize;
+        } else if (specMode == MeasureSpec.EXACTLY) {
+            result = specSize;
+        }
+        return result;
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // 根据触摸位置更新控制点，并提示重绘
@@ -314,6 +372,22 @@ public class PathCoreView extends View {
 
     }
 
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+    private ROTE_SPEED mCurrentSpeedModel = ROTE_SPEED.DEFAULE_SPEED;
     private float mCurrentSpeed = 1f;
 
     public enum ROTE_SPEED {
@@ -327,26 +401,37 @@ public class PathCoreView extends View {
         switch (speed) {
             case DEFAULE_SPEED:
                 mCurrentSpeed = 1;
+                mCurrentSpeedModel=ROTE_SPEED.DEFAULE_SPEED;
                 break;
             case LOW_SPEED:
                 mCurrentSpeed = 0.5f;
+                mCurrentSpeedModel=ROTE_SPEED.LOW_SPEED;
                 break;
             case MIDDIL_SPEED:
                 mCurrentSpeed = 1.5f;
+                mCurrentSpeedModel=ROTE_SPEED.MIDDIL_SPEED;
                 break;
             case FAST_SPEED:
+                mCurrentSpeedModel=ROTE_SPEED.FAST_SPEED;
                 mCurrentSpeed = 2f;
                 break;
             case VERY_FAST_SPEED:
+                mCurrentSpeedModel=ROTE_SPEED.VERY_FAST_SPEED;
                 mCurrentSpeed = 2.5f;
                 break;
             default:
                 mCurrentSpeed = 1f;
+                mCurrentSpeedModel=ROTE_SPEED.DEFAULE_SPEED;
                 break;
         }
 
     }
-
+    /**
+     * 获取旋转速度
+     */
+    public ROTE_SPEED getCurrentSpeedModel(){
+        return mCurrentSpeedModel;
+    }
     /**
      * 半径设置
      */
@@ -359,12 +444,53 @@ public class PathCoreView extends View {
      */
     public void setCoreColor(int color){
         mCoreColor=color;
+        mPaint.setColor(color);
     }
     /**
      * 展开时间 设置
      */
     public void setCircleProgressDuration(int duration){
         mCircleProgressDuration = duration;
+    }
+
+    /**
+     * 重新开始
+     */
+    public void reStart(){
+        mNumber=0;
+    }
+    /**
+     * 停止
+     */
+    public void stop(){
+        mValueAnimator.cancel();
+    }
+    public void stop(boolean flag){
+        if (flag) {
+            mNumber=0;
+        }
+        stop();
+    }
+    /**
+     * 获取当前的展开时间
+     */
+    public long getCircleProgressDuration() {
+        return mCircleProgressDuration;
+    }
+
+    /**
+     * 开始转动
+     */
+    public void start(){
+        mValueAnimator.start();
+    }
+    /**
+     * 开始转动
+     */
+    public void start(int duation){
+        mCircleProgressDuration = duation;
+        mValueAnimator.setDuration(duation);
+        start();
     }
 }
 

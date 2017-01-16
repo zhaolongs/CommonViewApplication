@@ -12,7 +12,7 @@ import com.example.androidlongs.popwindowapplication.dialog.DialogFunction;
 import com.example.androidlongs.popwindowapplication.path.base8.PathTest8Activity;
 import com.example.androidlongs.popwindowapplication.pop.GrayBackgroundPopFunction;
 
-public class MainActivity extends BaseActivity {
+public class PopActivity extends BaseActivity {
 
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         mBackGroundGrayPopFromBottomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GrayBackgroundPopFunction.getInstance().fromBottomShow(MainActivity.this, mBackGroundGrayPopFromTopButton);
+                GrayBackgroundPopFunction.getInstance().fromBottomShow(PopActivity.this, mBackGroundGrayPopFromTopButton);
             }
         });
     }
@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
         mBackGroundGrayPopFromTopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GrayBackgroundPopFunction.getInstance().fromTopShow(MainActivity.this, mBackGroundGrayPopFromTopButton);
+                GrayBackgroundPopFunction.getInstance().fromTopShow(PopActivity.this, mBackGroundGrayPopFromTopButton);
             }
         });
     }
@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
         mBackGroundGrayPopFromRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GrayBackgroundPopFunction.getInstance().fromRightShow(MainActivity.this, mBackGroundGrayPopFromRightButton);
+                GrayBackgroundPopFunction.getInstance().fromRightShow(PopActivity.this, mBackGroundGrayPopFromRightButton);
             }
         });
     }
@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity {
         mBackGroundGrayPopFromLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GrayBackgroundPopFunction.getInstance().fromLeftShow(MainActivity.this, mBackGroundGrayPopFromLeftButton);
+                GrayBackgroundPopFunction.getInstance().fromLeftShow(PopActivity.this, mBackGroundGrayPopFromLeftButton);
             }
         });
     }
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity {
         mAlertDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFunction.getInstance().commonDeleteShow(MainActivity.this);
+                DialogFunction.getInstance().commonDeleteShow(PopActivity.this);
             }
         });
 
@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity {
     private View.OnClickListener mView8OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            MainActivity.this.startActivity(new Intent(MainActivity.this, PathTest8Activity.class));
+            PopActivity.this.startActivity(new Intent(PopActivity.this, PathTest8Activity.class));
         }
     };
 }

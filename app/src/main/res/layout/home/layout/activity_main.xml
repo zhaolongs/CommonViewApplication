@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              tools:context="com.example.androidlongs.popwindowapplication.MainActivity">
+              android:orientation="vertical"
+              tools:context="com.example.androidlongs.popwindowapplication.PopActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#ff282fed"
+        android:gravity="center">
+
+        <TextView
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="温馨提示"
+            android:textColor="#fff"/>
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/sv_main_content"
@@ -18,50 +33,93 @@
             android:padding="12dp">
 
 
-            <Button
+            <com.example.androidlongs.popwindowapplication.button.AnimationButton
                 android:id="@+id/bt_pop_from_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_background_selector"
-                android:text="@string/pop_from_bottom"/>
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@string/pop_from_bottom"
+                custom:backGroundColor="#f7282fed"
+                custom:backGroundDownColor="#f71d24e9"
+                custom:backGroundRoundColor="#f71d24e9"
+                custom:backGroundRoundRx="8dp"
+                custom:backGroundRoundRy="8dp"
+                custom:buttonTextColor="#fff"/>
 
-            <Button
+
+            <com.example.androidlongs.popwindowapplication.button.AnimationButton
                 android:id="@+id/bt_pop_from_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_background_selector"
-                android:text="@string/pop_from_top"/>
+                android:text="@string/pop_from_top"
+                custom:backGroundColor="#f7282fed"
+                custom:backGroundDownColor="#f71d24e9"
+                custom:backGroundRoundColor="#f71d24e9"
+                custom:backGroundRoundRx="8dp"
+                custom:backGroundRoundRy="8dp"
+                custom:buttonTextColor="#fff"/>
 
-            <Button
+
+            <com.example.androidlongs.popwindowapplication.button.AnimationButton
                 android:id="@+id/bt_pop_from_left"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_background_selector"
-                android:text="@string/pop_from_left"/>
+                android:text="@string/pop_from_left"
+                custom:backGroundColor="#f7282fed"
+                custom:backGroundDownColor="#f71d24e9"
+                custom:backGroundRoundColor="#f71d24e9"
+                custom:backGroundRoundRx="8dp"
+                custom:backGroundRoundRy="8dp"
+                custom:buttonTextColor="#fff"/>
 
-            <Button
+
+            <com.example.androidlongs.popwindowapplication.button.AnimationButton
                 android:id="@+id/bt_pop_from_right"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_background_selector"
-                android:text="@string/pop_from_right"/>
-            <Button
+                android:text="@string/pop_from_right"
+                custom:backGroundColor="#f7282fed"
+                custom:backGroundDownColor="#f71d24e9"
+                custom:backGroundRoundColor="#f71d24e9"
+                custom:backGroundRoundRx="8dp"
+                custom:backGroundRoundRy="8dp"
+                custom:buttonTextColor="#fff"/>
+
+            <com.example.androidlongs.popwindowapplication.button.AnimationButton
                 android:id="@+id/bt_dialog_base"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_background_selector"
-                android:text="@string/dia_delete_base"/>
-            <Button
+                android:text="@string/dia_delete_base"
+                custom:backGroundColor="#f7282fed"
+                custom:backGroundDownColor="#f71d24e9"
+                custom:backGroundRoundColor="#f71d24e9"
+                custom:backGroundRoundRx="8dp"
+                custom:backGroundRoundRy="8dp"
+                custom:buttonTextColor="#fff"/>
+
+            <com.example.androidlongs.popwindowapplication.button.AnimationButton
                 android:id="@+id/bt_path_view_8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_background_selector"
-                android:text="爱心静态"/>
+                android:text="爱心静态"
+                custom:backGroundColor="#f7282fed"
+                custom:backGroundDownColor="#f71d24e9"
+                custom:backGroundRoundColor="#f71d24e9"
+                custom:backGroundRoundRx="8dp"
+                custom:backGroundRoundRy="8dp"
+                custom:buttonTextColor="#fff"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
