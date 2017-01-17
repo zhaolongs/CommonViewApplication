@@ -20,6 +20,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".path.base9.PathTest9Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".PopActivity"/>
         <activity android:name=".path.base8.PathTest8Activity"/>
         <activity android:name=".path.base8.PathCoreMainActivity"/>
