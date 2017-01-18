@@ -94,4 +94,22 @@
             <flag name="very_fast_speed" value="5"/>
         </attr>
     </declare-styleable>
+
+
+    <!--滑动开关-->
+    <declare-styleable name="CirCleSwitchButton">
+        <!--滑动时间 -->
+        <attr name="switchButtonDuaration" format="integer"/>
+        <!--滑动 关闭 背景-->
+        <attr name="switchButtonCloseColor" format="color"/>
+        <!--滑动 打开 背景-->
+        <attr name="switchButtonOpenColor" format="color"/>
+        <!--滑块颜色-->
+        <attr name="switchButtonColor" format="color"/>
+        <!--开关打开状态-->
+        <attr name="switchButtonStatue">
+            <flag name="open" value="1"/>
+            <flag name="close" value="2"/>
+        </attr>
+    </declare-styleable>
 </resources>

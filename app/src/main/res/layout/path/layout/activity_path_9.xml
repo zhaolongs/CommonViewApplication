@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:switch_button="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:core="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:weightSum="1">
 
 
     <TextView
@@ -13,7 +14,30 @@
         android:padding="10dp"
         android:text="baseview 9"/>
 
-   <com.example.androidlongs.popwindowapplication.path.base9.PathView9
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+    <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
+        android:layout_width="wrap_content"
+        android:layout_height="94dp"
+        switch_button:switchButtonDuaration="100"/>
+
+    <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
+        android:layout_width="wrap_content"
+        android:layout_height="101dp"
+        switch_button:switchButtonDuaration="300"
+        switch_button:switchButtonStatue="open"
+        switch_button:switchButtonColor="#fff"
+        switch_button:switchButtonCloseColor="#282828"
+        switch_button:switchButtonOpenColor="#2136d6"
+        />
+
+    <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
+        android:layout_width="wrap_content"
+        android:layout_height="101dp"
+        switch_button:switchButtonDuaration="500"
+        />
+
+    <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
+        android:layout_width="wrap_content"
+        android:layout_height="101dp"
+        switch_button:switchButtonDuaration="800"
+        />
 </LinearLayout>
