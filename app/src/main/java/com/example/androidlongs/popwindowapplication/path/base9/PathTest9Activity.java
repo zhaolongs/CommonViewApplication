@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.androidlongs.popwindowapplication.R;
+import com.example.androidlongs.popwindowapplication.utils.LogUtils;
 
 /**
  * Created by androidlongs on 17/1/11.
@@ -18,5 +19,19 @@ public class PathTest9Activity extends Activity {
         setContentView(R.layout.activity_path_9);
 
 
+        CirCleSwitchButton cirCleSwitchButton = (CirCleSwitchButton) findViewById(R.id.switch_button);
+        cirCleSwitchButton.setSwitchButtonLiserner(mLiserner);
     }
+
+    private CirCleSwitchButton.OnSwitchButtonStatueLiserner mLiserner = new CirCleSwitchButton.OnSwitchButtonStatueLiserner() {
+        @Override
+        public void onClose() {
+            LogUtils.d(" switch close ");
+        }
+
+        @Override
+        public void onOpen() {
+            LogUtils.d(" switch open ");
+        }
+    };
 }

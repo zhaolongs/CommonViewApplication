@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
+              android:background="#afaeae"
               android:weightSum="1">
 
 
@@ -16,28 +17,37 @@
 
     <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
         android:layout_width="wrap_content"
-        android:layout_height="94dp"
-        switch_button:switchButtonDuaration="100"/>
-
-    <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
-        android:layout_width="wrap_content"
-        android:layout_height="101dp"
-        switch_button:switchButtonDuaration="300"
-        switch_button:switchButtonStatue="open"
-        switch_button:switchButtonColor="#fff"
-        switch_button:switchButtonCloseColor="#282828"
-        switch_button:switchButtonOpenColor="#2136d6"
-        />
-
-    <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
-        android:layout_width="wrap_content"
-        android:layout_height="101dp"
-        switch_button:switchButtonDuaration="500"
-        />
-
-    <com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton
-        android:layout_width="wrap_content"
-        android:layout_height="101dp"
+        android:layout_height="wrap_content"
         switch_button:switchButtonDuaration="800"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="#6c6c6c"
+        android:id="@+id/switch_button"
         />
+
+    <!--<com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--switch_button:switchButtonDuaration="100"-->
+    <!--switch_button:switchButtonRadius="10dp"/>-->
+
+    <!--<com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--switch_button:switchButtonCloseColor="#282828"-->
+    <!--switch_button:switchButtonColor="#fff"-->
+    <!--switch_button:switchButtonDuaration="300"-->
+    <!--switch_button:switchButtonOpenColor="#2136d6"-->
+    <!--switch_button:switchButtonRadius="20dp"-->
+    <!--switch_button:switchButtonStatue="open"-->
+    <!--/>-->
+
+    <!--<com.example.androidlongs.popwindowapplication.path.base9.CirCleSwitchButton-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--switch_button:switchButtonDuaration="500"-->
+    <!--switch_button:switchButtonRadius="30dp"-->
+    <!--/>-->
+
+
 </LinearLayout>

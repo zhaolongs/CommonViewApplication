@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
 import com.example.androidlongs.popwindowapplication.R;
+import com.example.androidlongs.popwindowapplication.utils.LogUtils;
 
 
 /**
@@ -43,12 +44,16 @@ public class CirCleSwitchButton extends View {
     private int mSwitchButtonSlideColor;
     private int mSwitchButtonSlideCloseBackgroundColor;
     private int mSwitchButtonSlideOpenBackgroundColor;
+    private boolean mIsSwitchButtonOnceDraw = true;
 
+    //开关的状态
     public enum SWITCH_STATUE {
         OPEN, CLOSE
     }
 
+    //开关的当前状态
     public SWITCH_STATUE mSwitchButtonCurrentSwitch = SWITCH_STATUE.CLOSE;
+    //开关的上一次点击状态
     public SWITCH_STATUE mSwitchButtonPreSwitch = SWITCH_STATUE.CLOSE;
 
 
@@ -69,12 +74,18 @@ public class CirCleSwitchButton extends View {
 
     private void initFunction(Context context, AttributeSet attrs, int defStyleAttr) {
 
+        //画笔
         mSwitchButtonMainPaint = new Paint();
-        mSwitchButtonMainPaint.setColor(Color.RED);
+        //画笔颜色
+        mSwitchButtonMainPaint.setColor(Color.WHITE);
+        //画笔模式
         mSwitchButtonMainPaint.setStyle(Paint.Style.FILL);
+        //抗锯齿
         mSwitchButtonMainPaint.setAntiAlias(true);
+        //抗抖动
         mSwitchButtonMainPaint.setDither(true);
 
+        //开关点击区域控制
         mSwitchButtonLeftRegion = new Region();
         mSwitchButtonRightRegion = new Region();
 
@@ -117,6 +128,7 @@ public class CirCleSwitchButton extends View {
         mSwitchButtonValueAnimator.setInterpolator(new OvershootInterpolator());
 
 
+        //自定义属性控制
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs,
                     R.styleable.CirCleSwitchButton);
@@ -145,13 +157,19 @@ public class CirCleSwitchButton extends View {
                 mSwitchButtonSlideCloseBackgroundColor = Color.parseColor("#0f0f0f");
             }
 
+            //半径
+            mSwitchButtonSlideRadius = (int) typedArray.getDimension(R.styleable.CirCleSwitchButton_switchButtonRadius, 20);
+            setSwitchButtonSlideRadius(mSwitchButtonSlideRadius);
             //状态设置
-            int statue = typedArray.getInt(R.styleable.CirCleSwitchButton_switchButtonStatue,2);
-            if (statue==1){
-                mSwitchButtonCurrentSwitch=SWITCH_STATUE.CLOSE;
-            }else {
-                mSwitchButtonCurrentSwitch=SWITCH_STATUE.OPEN;
+            int statue = typedArray.getInt(R.styleable.CirCleSwitchButton_switchButtonStatue, 1);
+            if (statue == 1) {
+                mSwitchButtonCurrentSwitch = SWITCH_STATUE.CLOSE;
+            } else {
+                mSwitchButtonCurrentSwitch = SWITCH_STATUE.OPEN;
             }
+
+            // 回收
+            typedArray.recycle();
 
         }
     }
@@ -174,16 +192,28 @@ public class CirCleSwitchButton extends View {
         super.onDraw(canvas);
 
         canvas.translate(mSwitchButtonWidth / 2, mSwitchButtonHeight / 2);
+        //保存图层到默认栈中
         canvas.save();
 
-        // 方法二
         // 返回true，如果canvas在绘制的时候启用了硬件加速
         // 尽量采用此方法来判断是否开启了硬件加速
         if (canvas.isHardwareAccelerated()) {
             this.setLayerType(View.LAYER_TYPE_NONE, null);
         }
 
+        if (mIsSwitchButtonOnceDraw) {
+            //第一次绘制
+            onceStartDrawFunction(canvas);
+        } else {
+            //非第一次绘制
+            defaultDrawFunction(canvas);
+        }
 
+        //重置图层
+        canvas.restore();
+    }
+
+    private void defaultDrawFunction(Canvas canvas) {
         //变换手指按下坐标
         float[] downPoint = new float[] {mDownx, mDowny};
         Matrix matrix = new Matrix();
@@ -195,62 +225,152 @@ public class CirCleSwitchButton extends View {
 
         //点按有效区域
         if (mSwitchButtonLeftRegion.contains(x, y) || mSwitchButtonRightRegion.contains(x, y)) {
-            Log.d("down ", "down left " + mDownx + " - " + downPoint[0]);
+            LogUtils.d("down left " + mDownx + " - " + downPoint[0]);
 
             if (mSwitchButtonCurrentSwitch == SWITCH_STATUE.OPEN) {
                 //开启
                 //绘制背景
-                mSwitchButtonMainPaint.setStyle(Paint.Style.FILL);
-                mSwitchButtonMainPaint.setColor(mSwitchButtonSlideOpenBackgroundColor);
-                canvas.drawRoundRect(mSwitchButtonBackGroundRectF, mSwitchButtonSlideRadius, mSwitchButtonSlideRadius, mSwitchButtonMainPaint);
-
-                //绘制圆环
-                mSwitchButtonMainPaint.setStyle(Paint.Style.STROKE);
-                mSwitchButtonMainPaint.setColor(mSwitchButtonSlideColor);
-                mSwitchButtonMainPaint.setStrokeWidth(mSwitchButtonSlideWidth);
-                //动态移动
-                canvas.translate((mSwitchButtonBackGroundRectF.width() - mSwitchButtonBackGroundRectF.height()) * mAnimatorValue, 0);
-                //绘制圆环
-                canvas.drawCircle(-mSwitchButtonSlideRadius, 0, (mSwitchButtonBackGroundRectF.height() - mSwitchButtonSlideWidth) / 2, mSwitchButtonMainPaint);
-
+                defaulDrawBackgroundFunction(canvas, mSwitchButtonSlideOpenBackgroundColor);
+                //圆环
+                defaulDrawSlide(canvas, mAnimatorValue, +1);
             } else if (mSwitchButtonCurrentSwitch == SWITCH_STATUE.CLOSE) {
 
                 //关闭
                 //绘制背景
-                mSwitchButtonMainPaint.setStyle(Paint.Style.FILL);
-                mSwitchButtonMainPaint.setColor(mSwitchButtonSlideCloseBackgroundColor);
-                canvas.drawRoundRect(mSwitchButtonBackGroundRectF, mSwitchButtonSlideRadius, mSwitchButtonSlideRadius, mSwitchButtonMainPaint);
-
-                //绘制圆环
-                mSwitchButtonMainPaint.setStyle(Paint.Style.STROKE);
-                mSwitchButtonMainPaint.setColor(mSwitchButtonSlideColor);
-                mSwitchButtonMainPaint.setStrokeWidth(mSwitchButtonSlideWidth);
-
-                canvas.translate(-(mSwitchButtonBackGroundRectF.width() - mSwitchButtonBackGroundRectF.height()) * mAnimatorValue, 0);
-                canvas.drawCircle(mSwitchButtonSlideRadius, 0, (mSwitchButtonBackGroundRectF.height() - mSwitchButtonSlideWidth) / 2, mSwitchButtonMainPaint);
+                defaulDrawBackgroundFunction(canvas, mSwitchButtonSlideCloseBackgroundColor);
+                //圆环
+                defaulDrawSlide(canvas, mAnimatorValue, -0.5f);
             }
         } else {
-            Log.e("down ", "down is outsite  " + x + " y " + y);
-            //绘制背景
-            mSwitchButtonMainPaint.setStyle(Paint.Style.FILL);
-            mSwitchButtonMainPaint.setColor(mSwitchButtonSlideCloseBackgroundColor);
-            canvas.drawRoundRect(mSwitchButtonBackGroundRectF, mSwitchButtonSlideRadius, mSwitchButtonSlideRadius, mSwitchButtonMainPaint);
-
-            //绘制圆环
-            mSwitchButtonMainPaint.setStyle(Paint.Style.STROKE);
-            mSwitchButtonMainPaint.setColor(mSwitchButtonSlideColor);
-            mSwitchButtonMainPaint.setStrokeWidth(mSwitchButtonSlideWidth);
-            canvas.drawCircle(-mSwitchButtonSlideRadius, 0, (mSwitchButtonBackGroundRectF.height() - mSwitchButtonSlideWidth) / 2, mSwitchButtonMainPaint);
+            LogUtils.e("down is outsite  " + x + " y " + y);
             mSwitchButtonCurrentSwitch = mSwitchButtonPreSwitch;
+            if (mSwitchButtonCurrentSwitch == SWITCH_STATUE.OPEN) {
+                defaulDrawBackgroundFunction(canvas, mSwitchButtonSlideOpenBackgroundColor);
+                //圆环
+                defaulDrawSlide(canvas, 1);
+            } else {
+
+                defaulDrawBackgroundFunction(canvas, mSwitchButtonSlideCloseBackgroundColor);
+                //圆环
+                defaulDrawSlide(canvas, 0);
+            }
+
+
         }
 
+    }
 
-        canvas.restore();
+    /**
+     * 第一次加载控件绘制
+     */
+    private void onceStartDrawFunction(Canvas canvas) {
+        //设置标识
+        mIsSwitchButtonOnceDraw = false;
+        if (mSwitchButtonCurrentSwitch == SWITCH_STATUE.OPEN) {
+            //开启
+            //绘制背景
+            defaulDrawBackgroundFunction(canvas, mSwitchButtonSlideOpenBackgroundColor);
+            //绘制圆环
+            defaulDrawSlide(canvas, 1);
+
+        } else if (mSwitchButtonCurrentSwitch == SWITCH_STATUE.CLOSE) {
+            //绘制背景
+            defaulDrawBackgroundFunction(canvas, mSwitchButtonSlideCloseBackgroundColor);
+            defaulDrawSlide(canvas, 0);
+        }
+    }
+
+    //绘制背景
+    private void defaulDrawBackgroundFunction(Canvas canvas, int color) {
+        //设置背景绘制样式
+        mSwitchButtonMainPaint.setStyle(Paint.Style.FILL);
+        mSwitchButtonMainPaint.setColor(color);
+        //绘制矩形背景
+        canvas.drawRoundRect(mSwitchButtonBackGroundRectF, mSwitchButtonSlideRadius, mSwitchButtonSlideRadius, mSwitchButtonMainPaint);
+    }
+
+    //绘制圆环
+    private void defaulDrawSlide(Canvas canvas, float i) {
+        defaulDrawSlide(canvas, i, +1);
+    }
+
+    private void defaulDrawSlide(Canvas canvas, float i, float flag) {
+        //设置圆环画笔样式
+        mSwitchButtonMainPaint.setStyle(Paint.Style.STROKE);
+        mSwitchButtonMainPaint.setColor(mSwitchButtonSlideColor);
+        mSwitchButtonMainPaint.setStrokeWidth(mSwitchButtonSlideWidth);
+        //动态移动
+        if (flag > 0) {
+            canvas.translate((mSwitchButtonBackGroundRectF.width() - mSwitchButtonBackGroundRectF.height()) * (i), 0);
+
+        } else {
+            canvas.translate((mSwitchButtonBackGroundRectF.width() - mSwitchButtonBackGroundRectF.height()) * (1 - i), 0);
+        }
+        //绘制圆环
+        canvas.drawCircle(-mSwitchButtonSlideRadius, 0, (mSwitchButtonBackGroundRectF.height() - mSwitchButtonSlideWidth) / 2, mSwitchButtonMainPaint);
     }
 
     private float mDownx;
     private float mDowny;
-    private float mProgress;
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+
+        //上下左右 内边距
+        int left = getPaddingLeft();
+        int bottom = getPaddingBottom();
+        int top = getPaddingTop();
+        int right = getPaddingRight();
+
+        //定义默认宽
+        int defaulWidth = mSwitchButtonSlideRadius * 5 + left + right;
+        //定义默认高
+        int defaulHeight = mSwitchButtonSlideRadius * 3 + top + bottom;
+
+        LogUtils.v("v defaul width " + defaulWidth + "  " + defaulHeight);
+        /**
+         * MeasureSpec封装了父布局传递给子布局的布局要求，每个MeasureSpec代表了一组宽度和高度的要求
+         * MeasureSpec由size和mode组成。
+         * 三种Mode：
+         * 1.UNSPECIFIED
+         * 父不没有对子施加任何约束，子可以是任意大小（也就是未指定）
+         * (UNSPECIFIED在源码中的处理和EXACTLY一样。当View的宽高值设置为0的时候或者没有设置宽高时，模式为UNSPECIFIED
+         * 2.EXACTLY
+         * 父决定子的确切大小，子被限定在给定的边界里，忽略本身想要的大小。
+         * (当设置width或height为match_parent时，模式为EXACTLY，因为子view会占据剩余容器的空间，所以它大小是确定的)
+         * 3.AT_MOST
+         * 子最大可以达到的指定大小
+         * (当设置为wrap_content时，模式为AT_MOST, 表示子view的大小最多是多少，这样子view会根据这个上限来设置自己的尺寸)
+         *
+         * MeasureSpecs使用了二进制去减少对象的分配。
+         */
+        //宽度
+        int widthModel = MeasureSpec.getMode(widthMeasureSpec);
+        if (widthModel == MeasureSpec.AT_MOST) {
+            LogUtils.e(" width model is at_most");
+        } else if (widthModel == MeasureSpec.EXACTLY) {
+            LogUtils.e("width model is exactly ");
+            defaulWidth = MeasureSpec.getSize(widthMeasureSpec);
+        } else {
+            LogUtils.e("width model is UNSPECIFIED");
+        }
+
+        //高度
+        int heightModel = MeasureSpec.getMode(heightMeasureSpec);
+        if (heightModel == MeasureSpec.AT_MOST) {
+            LogUtils.e("height model  at_most ");
+        } else if (heightModel == MeasureSpec.EXACTLY) {
+            LogUtils.e("height model is  exatly ");
+            defaulHeight = MeasureSpec.getSize(heightMeasureSpec);
+        } else {
+            LogUtils.e("height model is UNSPECIFIED  ");
+        }
+        //设置
+        setMeasuredDimension(defaulWidth, defaulHeight);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -259,7 +379,6 @@ public class CirCleSwitchButton extends View {
                 mDownx = event.getX();
                 mDowny = event.getY();
 
-                invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
                 int moveX = (int) event.getX();
@@ -273,9 +392,15 @@ public class CirCleSwitchButton extends View {
                 if (mSwitchButtonCurrentSwitch == SWITCH_STATUE.CLOSE) {
                     mSwitchButtonCurrentSwitch = SWITCH_STATUE.OPEN;
                     mSwitchButtonPreSwitch = SWITCH_STATUE.CLOSE;
+                    if (mLiserner != null) {
+                        mLiserner.onOpen();
+                    }
                 } else {
                     mSwitchButtonCurrentSwitch = SWITCH_STATUE.CLOSE;
                     mSwitchButtonPreSwitch = SWITCH_STATUE.OPEN;
+                    if (mLiserner != null) {
+                        mLiserner.onClose();
+                    }
                 }
 
                 if (mSwitchButtonValueAnimator.isRunning()) {
@@ -330,11 +455,33 @@ public class CirCleSwitchButton extends View {
         this.mSwitchButtonSlideCloseBackgroundColor = color;
     }
 
+    /**
+     * 设置半径
+     */
+    public void setSwitchButtonSlideRadius(int radius) {
+
+        mSwitchButtonSlideRadius = radius;
+        mSwitchButtonSlideWidth = mSwitchButtonSlideRadius * 1f / 1.5f;
+    }
 
     /**
      * 状态设置
      */
-    public void setSwitchButtonStatue(SWITCH_STATUE tpye){
-        this.mSwitchButtonCurrentSwitch=tpye;
+    public void setSwitchButtonStatue(SWITCH_STATUE tpye) {
+        this.mSwitchButtonCurrentSwitch = tpye;
+    }
+
+    interface OnSwitchButtonStatueLiserner {
+        //close
+        void onClose();
+
+        //open
+        void onOpen();
+    }
+
+    public OnSwitchButtonStatueLiserner mLiserner;
+
+    public void setSwitchButtonLiserner(OnSwitchButtonStatueLiserner liserner) {
+        this.mLiserner = liserner;
     }
 }

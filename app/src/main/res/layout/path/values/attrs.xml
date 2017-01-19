@@ -106,10 +106,12 @@
         <attr name="switchButtonOpenColor" format="color"/>
         <!--滑块颜色-->
         <attr name="switchButtonColor" format="color"/>
+        <!--控件的大小-->
+        <attr name="switchButtonRadius" format="dimension"/>
         <!--开关打开状态-->
         <attr name="switchButtonStatue">
-            <flag name="open" value="1"/>
-            <flag name="close" value="2"/>
+            <flag name="open" value="2"/>
+            <flag name="close" value="1"/>
         </attr>
     </declare-styleable>
 </resources>
