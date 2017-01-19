@@ -28,22 +28,32 @@ import com.example.androidlongs.popwindowapplication.utils.LogUtils;
 
 public class CirCleSwitchButton extends View {
 
+    //默认画笔
     private Paint mSwitchButtonMainPaint;
+    //宽
     private int mSwitchButtonWidth;
+    //高
     private int mSwitchButtonHeight;
-
+    //绘制半径
     private int mSwitchButtonSlideRadius = 60;
+    //画笔宽度
     private float mSwitchButtonSlideWidth = mSwitchButtonSlideRadius * 1f / 1.5f;
+    //背景
     private RectF mSwitchButtonBackGroundRectF;
+    //点击范围
     private Region mSwitchButtonRightRegion;
     private Region mSwitchButtonLeftRegion;
     private ValueAnimator mSwitchButtonValueAnimator;
     private float mAnimatorValue;
+    //开关 切换时间
     private long mSwitchButtonSlideDuration = 1000;
-
+    //开关 滑块颜色
     private int mSwitchButtonSlideColor;
+    //开关关闭背景颜色
     private int mSwitchButtonSlideCloseBackgroundColor;
+    //开关打开背景颜色
     private int mSwitchButtonSlideOpenBackgroundColor;
+    //开关第一次绘制标识
     private boolean mIsSwitchButtonOnceDraw = true;
 
     //开关的状态
