@@ -114,4 +114,20 @@
             <flag name="close" value="1"/>
         </attr>
     </declare-styleable>
+
+    <!--优酷加载进度-->
+    <declare-styleable name="YouKuProgressView">
+        <!--加载进度圈半径-->
+        <attr name="YouKuRadius" format="dimension"/>
+        <!--转动时间-->
+        <attr name="YouKuDuration" format="integer"/>
+        <!--周期分割-->
+        <attr name="YouKuUnitNumber" format="integer"/>
+        <!--颜色-->
+        <attr name="YouKuColor1" format="color"/>
+        <attr name="YouKuColor2" format="color"/>
+
+        <attr name="YouKuIsDefaultStart" format="boolean"/>
+
+    </declare-styleable>
 </resources>

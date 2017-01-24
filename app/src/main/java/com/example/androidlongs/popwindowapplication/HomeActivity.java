@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.androidlongs.popwindowapplication.button.AnimationButton;
 import com.example.androidlongs.popwindowapplication.path.base8.PathCoreMainActivity;
+import com.example.androidlongs.popwindowapplication.sufure.youku.YouKuTextActivity;
 
 /**
  * Created by androidlongs on 17/1/16.
@@ -18,6 +19,8 @@ public class HomeActivity extends Activity {
 
     private AnimationButton mPopButton;
     private AnimationButton mCoreButton;
+    private AnimationButton mYouKuButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +28,13 @@ public class HomeActivity extends Activity {
         mPopButton = (AnimationButton) findViewById(R.id.pop_home);
         mCoreButton = (AnimationButton) findViewById(R.id.core_home);
 
+        mYouKuButton = (AnimationButton) findViewById(R.id.youku_home);
+
+
 
         mCoreButton.setOnClickListener(mCoreClickListener);
         mPopButton.setOnClickListener(mPopClickListener);
+        mYouKuButton.setOnClickListener(mYouKuClickListener);
     }
     //pop主页面
     private View.OnClickListener mPopClickListener = new View.OnClickListener() {
@@ -44,4 +51,15 @@ public class HomeActivity extends Activity {
             HomeActivity.this.startActivity(new Intent(HomeActivity.this,PathCoreMainActivity.class));
         }
     };
+
+
+    //可爱的心形主页面
+    private View.OnClickListener mYouKuClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this,YouKuTextActivity.class));
+        }
+    };
+
+
 }

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-sdk android:minSdkVersion="3" />
 
     <application
         android:allowBackup="true"
@@ -31,6 +31,7 @@
         <activity android:name=".PopActivity"/>
         <activity android:name=".path.base8.PathTest8Activity"/>
         <activity android:name=".path.base8.PathCoreMainActivity"/>
+        <activity android:name = ".sufure.youku.YouKuTextActivity" />
 
         <meta-data android:name="com.example.androidlongs.popwindowapplication.img.glide.GlideConfiguration"
                    android:value="GlideModule"/>

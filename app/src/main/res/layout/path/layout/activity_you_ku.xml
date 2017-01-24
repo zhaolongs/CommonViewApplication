@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              xmlns:youku = "http://schemas.android.com/apk/res-auto"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:orientation = "vertical" >
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "48dp"
+		android:background = "#ff282fed"
+		android:gravity = "center" >
+
+		<TextView
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:text = "youku"
+			android:textColor = "#fff"
+			android:textSize = "16sp" />
+	</LinearLayout >
+
+
+	<com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressView
+		android:id = "@+id/id_youku_home"
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_gravity = "center_horizontal"
+		android:layout_marginTop = "10dp" />
+
+
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "12dp"
+		android:gravity = "center"
+		android:orientation = "horizontal" >
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/youku_stop"
+			android:layout_width = "80dp"
+			android:layout_height = "30dp"
+			android:gravity = "center"
+			android:padding = "0dp"
+			android:text = "stop"
+			android:textSize = "8sp"
+			youku:backGroundColor = "#f7282fed"
+			youku:backGroundDownColor = "#f71d24e9"
+			youku:backGroundRoundColor = "#f71d24e9"
+			youku:backGroundRoundRx = "4dp"
+			youku:backGroundRoundRy = "4dp"
+			youku:buttonTextColor = "#fff" />
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/youku_start"
+			android:layout_width = "80dp"
+			android:layout_height = "30dp"
+			android:layout_marginLeft = "20dp"
+			android:gravity = "center"
+			android:padding = "0dp"
+			android:text = "start"
+			android:textSize = "8sp"
+			youku:backGroundColor = "#f7282fed"
+			youku:backGroundDownColor = "#f71d24e9"
+			youku:backGroundRoundColor = "#f71d24e9"
+			youku:backGroundRoundRx = "8dp"
+			youku:backGroundRoundRy = "8dp"
+			youku:buttonTextColor = "#fff" />
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/youku_select_speed"
+			android:layout_width = "80dp"
+			android:layout_height = "30dp"
+			android:layout_marginLeft = "20dp"
+			android:gravity = "center"
+			android:padding = "0dp"
+			android:text = "调速"
+			android:textSize = "8sp"
+			youku:backGroundColor = "#f7282fed"
+			youku:backGroundDownColor = "#f71d24e9"
+			youku:backGroundRoundColor = "#f71d24e9"
+			youku:backGroundRoundRx = "8dp"
+			youku:backGroundRoundRy = "8dp"
+			youku:buttonTextColor = "#fff" />
+
+	</LinearLayout >
+</LinearLayout >
