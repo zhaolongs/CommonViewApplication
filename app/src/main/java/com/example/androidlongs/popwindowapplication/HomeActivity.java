@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.example.androidlongs.popwindowapplication.button.AnimationButton;
 import com.example.androidlongs.popwindowapplication.path.base8.PathCoreMainActivity;
-import com.example.androidlongs.popwindowapplication.sufure.youku.YouKuTextActivity;
+import com.example.androidlongs.popwindowapplication.sufure.youku.YouKuActivity;
 
 /**
  * Created by androidlongs on 17/1/16.
@@ -57,7 +57,7 @@ public class HomeActivity extends Activity {
     private View.OnClickListener mYouKuClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            HomeActivity.this.startActivity(new Intent(HomeActivity.this,YouKuTextActivity.class));
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this,YouKuActivity.class));
         }
     };
 

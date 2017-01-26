@@ -1,5 +1,7 @@
 package com.example.androidlongs.popwindowapplication.sufure.youku;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -7,49 +9,60 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.graphics.PorterDuff;
-import android.os.SystemClock;
+import android.graphics.RectF;
+import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 import com.example.androidlongs.popwindowapplication.R;
 import com.example.androidlongs.popwindowapplication.utils.LogUtils;
 
+import static com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressView.PROGRE_STATUE.LEVE1_TRANSLATE;
+import static com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressView.PROGRE_STATUE.LEVE2_DRAW_CICRE;
+import static com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressView.PROGRE_STATUE.LEVE3_ROTE;
+import static com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressView.PROGRE_STATUE.LEVE4_CLOSE;
+
 /**
- * Created by androidlongs on 17/1/22.
+ * Created by androidlongs on 17/1/25.
  * 站在顶峰，看世界
  * 落在谷底，思人生
  */
 
-public class YouKuProgressView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
-
-    private SurfaceHolder mHolder;
-    private Thread mThread;
-    //运行标识
-    private boolean mIsRunning;
-    private boolean mIsStop = false;
-
-    private Canvas mCanvas;
-    //宽度
-    private float mYouKuStrokeWidth = 16;
-    //颜色
-    private int mYouKuColor = Color.BLUE;
+public class YouKuProgressView extends View {
     private Paint mPaint;
     private Path mPath;
-    private float mRadius = 50;
-    private float mRadiusWidth = mRadius / 5;
     private Path mDstPath;
     private Path mDst2Path;
     private PathMeasure mPathMeasure;
     private float mLength;
 
-    //加载控件 开始绘制标识
+
+    private int mYouKuColor = Color.BLUE;
+
+    private float mRadius = 50;
+    private float mNormalRadius = 50;
+
+    private float mRadiusWidth = mRadius / 5;
+    private ValueAnimator mYouKuProgressValueAnimator;
+    private float mAnimatorValue;
     private boolean mIsDefaultStart;
+    private int mViewHeight;
+    private int mViewWidth;
 
+    private Handler mHandler = new Handler();
 
-    //private SweepGradient mSweepGradient;
-
+    //当前旋转角度
+    private float mCurrentAngle;
+    //绘制背景颜色
+    private int mBackGroundColor;
+    //绘制背景圆角半径
+    private int mBackGroundRx;
+    //绘制背景圆角半径
+    private int mBackGroundRy;
+    //绘制背景标识
+    private boolean mIsShowBackGround;
 
     public YouKuProgressView(Context context) {
         super(context);
@@ -67,69 +80,168 @@ public class YouKuProgressView extends SurfaceView implements Runnable, SurfaceH
     }
 
     private void initFunction(Context context, AttributeSet attrs, int defStyleAttr) {
-        mHolder = this.getHolder();
-        mHolder.addCallback(this);
+        initCommonFunction(context);
+        if (attrs != null) {
+            initAttrsFunction(context, attrs);
+        }
+    }
 
+    private void initCommonFunction(Context context) {
+
+
+        //paint 想着设置
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
         mPaint.setColor(mYouKuColor);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(mYouKuStrokeWidth);
+        mPaint.setStrokeWidth(mRadiusWidth);
 
+        //主Path构造
         mPath = new Path();
         mPath.addCircle(0, 0, mRadius, Path.Direction.CW);
         mPath.close();
 
+        //目标 path构造 
         mDstPath = new Path();
         mDst2Path = new Path();
 
+        //Path测量
         mPathMeasure = new PathMeasure(mPath, false);
+        //绘制总长度
         mLength = mPathMeasure.getLength();
 
 
-       // this.setBackgroundColor(Color.WHITE);
+        initValueAnimatorFunction();
 
 
-        //自定义属性控制
-        if (attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                    R.styleable.YouKuProgressView);
+    }
 
-            //半径
-            int radius = (int) typedArray.getDimension(R.styleable.YouKuProgressView_YouKuRadius, 20);
-            setRadius(radius);
+    private void initValueAnimatorFunction() {
 
-            //时间
-            int duration = typedArray.getInteger(R.styleable.YouKuProgressView_YouKuDuration, 600);
-            setDuration(duration);
-
-            //时间
-            int unitNumber = typedArray.getInteger(R.styleable.YouKuProgressView_YouKuUnitNumber, 10);
-            setUnitNumber(unitNumber);
-
-            //颜色
-            int color1 = typedArray.getColor(R.styleable.YouKuProgressView_YouKuColor1, Color.BLUE);
-            int color2 = typedArray.getColor(R.styleable.YouKuProgressView_YouKuColor2, Color.RED);
-
-            setYouKuColor(color1, color2);
-
-            mIsDefaultStart = typedArray.getBoolean(R.styleable.YouKuProgressView_YouKuIsDefaultStart,false);
+        if (mYouKuProgressValueAnimator != null) {
+            mYouKuProgressValueAnimator.cancel();
+            mYouKuProgressValueAnimator = null;
         }
 
+
+        mYouKuProgressValueAnimator = ValueAnimator.ofFloat(0, 1);
+        mYouKuProgressValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                mAnimatorValue = (float) valueAnimator.getAnimatedValue();
+                invalidate();
+            }
+        });
+
+
+        mYouKuProgressValueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                //切换绘制颜色
+
+                switch (mCurrentProStatue) {
+                    case LEVE1_TRANSLATE:
+                        mYouKuProgressValueAnimator.setInterpolator(new LinearInterpolator());
+                        mCurrentProStatue = LEVE2_DRAW_CICRE;
+                        mAnimatorValue = 0;
+                        break;
+                    case LEVE2_DRAW_CICRE:
+                        mCurrentProStatue = LEVE3_ROTE;
+                        break;
+                    case LEVE3_ROTE:
+                        break;
+                    case LEVE4_CLOSE:
+                        mStopRepeatCount++;
+                        break;
+
+                }
+            }
+        });
+        mYouKuProgressValueAnimator.setDuration(mDuration / 4);
+        mYouKuProgressValueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mYouKuProgressValueAnimator.setInterpolator(new OvershootInterpolator());
     }
 
-    private int mColor1 = Color.BLUE;
-    private int mColor2 = Color.RED;
-
-    private void setYouKuColor(int color1, int color2) {
-        this.mColor1 = color1;
-        this.mColor2 = color2;
+    private void stopValueAnimatorFunction() {
+        if (mYouKuProgressValueAnimator != null) {
+            mYouKuProgressValueAnimator.cancel();
+            mYouKuProgressValueAnimator = null;
+        }
+        if (mYouKuCloseListener != null) {
+            mYouKuCloseListener.onClose();
+        }
     }
 
+    private void initAttrsFunction(Context context, AttributeSet attrs) {
 
-    private int mIsRoate = 0;
-    private int mCurrentAngle = 0;
+        TypedArray typedArray = context.obtainStyledAttributes(attrs,
+                R.styleable.YouKuProgressView);
+
+        //半径
+        int radius = (int) typedArray.getDimension(R.styleable.YouKuProgressView_YouKuViewRadius, 20);
+        setRadius(radius);
+
+        //时间
+        int duration = typedArray.getInteger(R.styleable.YouKuProgressView_YouKuViewDuration, 600);
+        setDuration(duration);
+
+        //时间
+        int unitNumber = typedArray.getInteger(R.styleable.YouKuProgressView_YouKuViewUnitNumber, 10);
+        setUnitNumber(unitNumber);
+
+        //颜色
+        int color1 = typedArray.getColor(R.styleable.YouKuProgressView_YouKuViewColor1, Color.BLUE);
+        int color2 = typedArray.getColor(R.styleable.YouKuProgressView_YouKuViewColor2, Color.RED);
+
+        setYouKuColor(color1, color2);
+        //开始绘制标识
+        mIsDefaultStart = typedArray.getBoolean(R.styleable.YouKuProgressView_YouKuViewIsDefaultStart, false);
+        LogUtils.d("you ku progress view -- mIsDefaultStart " + mIsDefaultStart);
+        if (mIsDefaultStart) {
+            setYouKuStart();
+        }
+
+        //背景颜色
+        mBackGroundColor = typedArray.getColor(R.styleable.YouKuProgressView_YouKuViewBackgrouncColor, Color.WHITE);
+        //圆角半径
+        mBackGroundRx = (int) typedArray.getDimension(R.styleable.YouKuProgressView_YouKuViewBackgrouncRx, 8);
+        mBackGroundRy = (int) typedArray.getDimension(R.styleable.YouKuProgressView_YouKuViewBackgrouncRy, 8);
+        //显示圆角半径
+        mIsShowBackGround = typedArray.getBoolean(R.styleable.YouKuProgressView_YouKuViewBackgrouncIsShow, true);
+
+    }
+
+    private PROGRE_STATUE mCurrentProStatue = PROGRE_STATUE.LEVE1_TRANSLATE;
+    private PROGRE_STATUE mPreProStatue = PROGRE_STATUE.LEVE1_TRANSLATE;
+
+    public enum PROGRE_STATUE {
+        LEVE1_TRANSLATE, LEVE2_DRAW_CICRE, LEVE3_ROTE, LEVE4_CLOSE
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        //宽度
+        mViewWidth = w;
+        //高度
+        mViewHeight = h;
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -167,261 +279,213 @@ public class YouKuProgressView extends SurfaceView implements Runnable, SurfaceH
         //宽度
         int widthModel = MeasureSpec.getMode(widthMeasureSpec);
         if (widthModel == MeasureSpec.AT_MOST) {
-            LogUtils.e(" width model is at_most");
+            LogUtils.e("you ku view  width model is at_most");
         } else if (widthModel == MeasureSpec.EXACTLY) {
-            LogUtils.e("width model is exactly ");
+            LogUtils.e("you ku view width model is exactly ");
             defaulWidth = MeasureSpec.getSize(widthMeasureSpec);
         } else {
-            LogUtils.e("width model is UNSPECIFIED");
+            LogUtils.e("you ku view width model is UNSPECIFIED");
         }
 
         //高度
         int heightModel = MeasureSpec.getMode(heightMeasureSpec);
         if (heightModel == MeasureSpec.AT_MOST) {
-            LogUtils.e("height model  at_most ");
+            LogUtils.e("you ku view  height model  at_most ");
         } else if (heightModel == MeasureSpec.EXACTLY) {
-            LogUtils.e("height model is  exatly ");
+            LogUtils.e("you ku view  height model is  exatly ");
             defaulHeight = MeasureSpec.getSize(heightMeasureSpec);
         } else {
-            LogUtils.e("height model is UNSPECIFIED  ");
+            LogUtils.e("you ku view height model is UNSPECIFIED  ");
         }
         //设置
         setMeasuredDimension(defaulWidth, defaulHeight);
     }
 
     @Override
-    public void run() {
-
-        while (mIsRunning) {
-            commonDrawFunction();
-        }
-
-
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.save();
+        commonDrawFunction(canvas);
+        canvas.restore();
     }
 
-    private   void  commonDrawFunction() {
-        long preTimeMillis = SystemClock.currentThreadTimeMillis();
 
-        if (mCurrentTimeUnit >= 1) {
-            mCurrentTimeUnit = 1;
-        }
-
+    private void commonDrawFunction(Canvas convas) {
         try {
-            mCanvas = mHolder.lockCanvas();
-            if (mCanvas != null) {
-
-
-                mCanvas.translate(getMeasuredWidth() / 2, getMeasuredHeight() / 2);
-                //清除画布
-                mCanvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
-                mPaint.setStyle(Paint.Style.FILL);
-                mPaint.setColor(Color.WHITE);
-                mCanvas.drawRect(-getMeasuredWidth() / 2, -getMeasuredHeight() / 2, getMeasuredWidth() / 2, getMeasuredHeight() / 2, mPaint);
-
-                mCanvas.save();
-
-                if (mIsRoate < 1) {
-                    //----------------------------------------------------------------------
-                    defaulDrawFunction1();
-                    //----------------------------------------------------------------------
-                    defaulDrawFunction2();
-
+            //画布平移
+            convas.translate(mViewWidth / 2, mViewHeight / 2);
+            //背景颜色
+            mPaint.setColor(mBackGroundColor);
+            mPaint.setStyle(Paint.Style.FILL);
+            //背景
+            convas.drawRoundRect(new RectF(-mViewWidth / 2, -mViewHeight / 2, mViewWidth / 2, mViewHeight), mBackGroundRx, mBackGroundRy, mPaint);
+            LogUtils.d("mCurrentAngle " + mCurrentAngle + " mAnimatorValue " + mAnimatorValue);
+            if (mCurrentProStatue == PROGRE_STATUE.LEVE1_TRANSLATE) {
+                //绘制 阶段一 平移
+                drawOriginFunction(1, convas);
+                drawOriginFunction(2, convas);
+            } else if (mCurrentProStatue == LEVE2_DRAW_CICRE) {
+                //绘制 阶段二 画弧
+                if (mPreProStatue == LEVE1_TRANSLATE) {
+                    mPreProStatue = LEVE2_DRAW_CICRE;
+                    drawOriginFunction(1, convas);
+                    drawOriginFunction(2, convas);
                 } else {
+                    LogUtils.e("you ku progress view -- LEVE2_DRAW_CICRE  " + mAnimatorValue);
+                    //----------------------------------------------------------------------
+                    defaulDrawFunction(1, convas);
+                    //----------------------------------------------------------------------
+                    defaulDrawFunction(2, convas);
+                }
+            } else if (mCurrentProStatue == LEVE3_ROTE) {
+                //绘制 阶段三 旋转
+                //角度计算
+                mCurrentAngle = mAnimatorValue * 360;
+                convas.rotate(mCurrentAngle);
+                //----------------------------------------------------------------------
+                defaulDrawFunction(1, convas);
+                //----------------------------------------------------------------------
+                defaulDrawFunction(2, convas);
+
+            } else if (mCurrentProStatue == PROGRE_STATUE.LEVE4_CLOSE) {
+                //绘制 阶段四 结束
+                if (mStopRepeatCount == 3) {
+                    drawCloseFunction(1, convas);
+                    drawCloseFunction(2, convas);
+                } else if (mStopRepeatCount < 3) {
                     //角度计算
-                    mCurrentAngle += (360f / mDurationCount * 1.3);
-                    LogUtils.d("angle " + mCurrentAngle + " radius " + mRadius);
-                    mCanvas.rotate(mCurrentAngle);
-                    //----------------------------------------------------------------------
-                    mCurrentTimeUnit = 0.5f;
-                    defaulDrawFunction1();
-                    //----------------------------------------------------------------------
-                    defaulDrawFunction2();
+                    mCurrentAngle = mAnimatorValue * 360;
+                    convas.rotate(mCurrentAngle);
+                    drawCloseFunction(1, convas);
+                    drawCloseFunction(2, convas);
+                } else {
+                    stopValueAnimatorFunction();
+                    drawCloseFunction(1, convas);
+                    drawCloseFunction(2, convas);
                 }
 
-                mCanvas.restore();
+
             }
+
 
         } catch (Exception e) {
             LogUtils.e("you ku exception : " + e.getMessage());
         } finally {
-            if (mCanvas != null) {
-                mHolder.unlockCanvasAndPost(mCanvas);
-            }
 
-            long currentTimeMillis = SystemClock.currentThreadTimeMillis();
-            long flagTimeMillis = currentTimeMillis - preTimeMillis;
-            if (flagTimeMillis < mDurationUnit) {
-                SystemClock.sleep((long) (mDurationUnit - flagTimeMillis));
-            }
+        }
 
-            if (mCurrentTimeUnit >= 0.5) {
-                mCurrentTimeUnit = 0.0f;
-                mIsRoate++;
+    }
+
+    private void drawCloseFunction(int i, Canvas convas) {
+
+        if (i == 1) {
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(mColor1);
+            if (mStopRepeatCount < 3) {
+                convas.drawCircle(mRadius, 0, mRadiusWidth / 2, mPaint);
+            } else if (mStopRepeatCount == 3) {
+                convas.drawCircle(mRadius * (1 - mAnimatorValue), 0, mRadiusWidth / 2, mPaint);
+            }else if (mStopRepeatCount == 4) {
+                convas.drawCircle(0, 0, mRadiusWidth / 2, mPaint);
+            }
+        } else {
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(mColor2);
+            if (mStopRepeatCount < 3) {
+                convas.drawCircle(-mRadius, 0, mRadiusWidth / 2, mPaint);
+            } else if (mStopRepeatCount == 3) {
+                convas.drawCircle(-mRadius * (1 - mAnimatorValue), 0, mRadiusWidth / 2, mPaint);
+            }else if (mStopRepeatCount == 4) {
+                convas.drawCircle(0, 0, mRadiusWidth / 2, mPaint);
             }
         }
 
-        if (mIsStop) {
-            LogUtils.e("isStop "+mIsStop + " isrunnign  "+mIsRunning +" timUnit "+mCurrentTimeUnit);
-            if ((mCurrentAngle%90)==0){
-                mIsRunning=false;
-            }
+    }
+
+    private void drawOriginFunction(int i, Canvas convas) {
+        if (i == 1) {
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(mColor1);
+            convas.drawCircle(mRadius * mAnimatorValue, 0, mRadiusWidth / 2, mPaint);
+        } else {
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(mColor2);
+            convas.drawCircle(-mRadius * mAnimatorValue, 0, mRadiusWidth / 2, mPaint);
         }
 
-        //更新进度
-        mCurrentTimeUnit += mDrawUnit;
 
     }
 
-    private void defaulDrawFunction2() {
-        //曲线二 起始点
-        float p2start = mLength * 0.5f;
-        //曲线二 终点
-        float p2_stop = mLength * (0.5f + mCurrentTimeUnit);
-        //曲线二 变化周期单位
-        float p2_unit = (p2_stop - p2start) / mUnitNumber;
-        //曲线二 绘制颜色设置
-        mPaint.setColor(mColor2);
-        //曲线二 绘制
-        drawFunction(p2start, p2_unit, 2);
+    private void defaulDrawFunction(int number, Canvas convas) {
+
+        for (int i = 0; i < mUnitNumber; i++) {
+            drawFunction(number, convas, i);
+        }
+
     }
 
-    private void defaulDrawFunction1() {
-        //曲线一起始点
-        float p1start = 0;
-        //曲线一终点
-        float p1_stop = mLength * mCurrentTimeUnit;
-        //曲线一变化周期单位
-        float p1_unit = p1_stop / mUnitNumber;
-        //曲线一 绘制颜色设置
-        mPaint.setColor(mColor1);
-        //曲线一 绘制
-        drawFunction(p1start, p1_unit, 1);
-    }
+    private float[] mPos1 = new float[2];
+    private float[] mPos2 = new float[2];
+    private float[] mTan = new float[2];
 
+    private void drawFunction(int number, Canvas convas, int i) {
 
-    //绘制功能
-    private void drawFunction(float p1start, float p1_unit, int flag, int sign) {
-
-
-        //透明度
-        float alpha = (flag - 1) * 255f / mUnitNumber;
-        //宽度
-        float strokeWidth = flag * (this.mRadiusWidth / mUnitNumber);
+        //透明度设置
+        float alpha = 255f / mUnitNumber * i;
         if (alpha >= 255) {
             alpha = 254;
         }
-        if (flag == mUnitNumber) {
-            alpha = 255;
-            strokeWidth = this.mRadiusWidth;
+
+
+        mDstPath.reset();
+
+        if (mPaint.getStrokeWidth() != mRadiusWidth) {
+            mPaint.setStrokeWidth(mRadiusWidth);
         }
-        //初始化 path
-        mDst2Path.reset();
-        //测量终点
-        float v9 = p1start + p1_unit * flag;
-        //限制第一部分曲线 终点
-        if (sign == 1) {
-            if (v9 >= mLength * 0.5f) {
-                v9 = mLength * 0.5f;
+
+        //变化度计算
+        float stopLength;
+        float unit = 0;
+        if (mCurrentProStatue == LEVE2_DRAW_CICRE) {
+            stopLength = mLength / 2 * mAnimatorValue;
+            unit = stopLength / mUnitNumber;
+        } else if (mCurrentProStatue == LEVE3_ROTE) {
+            stopLength = mLength / 2 * 1;
+            unit = stopLength / mUnitNumber;
+        }
+
+        //绘制第一段
+        if (number == 1) {
+
+            mPaint.setColor(mColor1);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setAlpha((int) alpha);
+            float start = i * unit;
+            mPathMeasure.getSegment(start, (i + 1) * unit, mDstPath, true);
+            convas.drawPath(mDstPath, mPaint);
+            if (i == (mUnitNumber - 1)) {
+                mPaint.setStyle(Paint.Style.FILL);
+                mPathMeasure.getPosTan((i + 1) * unit, mPos1, mTan);
+                float x = mPos1[0];
+                float y = mPos1[1];
+                convas.drawCircle(x, y, mRadiusWidth / 2, mPaint);
             }
-        } else {
-            //限制第二部分曲线 终点
-            if (v9 >= mLength) {
-                v9 = mLength;
+        } else if (number == 2) {
+            //绘制第二段
+            mDstPath.reset();
+            mPaint.setColor(mColor2);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setAlpha((int) alpha);
+            mPathMeasure.getSegment(mLength * 0.5f + i * unit, mLength * 0.5f + (i + 1) * unit, mDstPath, true);
+            convas.drawPath(mDstPath, mPaint);
+            if (i == (mUnitNumber - 1)) {
+                mPaint.setStyle(Paint.Style.FILL);
+                mPathMeasure.getPosTan(mLength * 0.5f + (i + 1) * unit, mPos2, mTan);
+                float x = mPos2[0];
+                float y = mPos2[1];
+                convas.drawCircle(x, y, mRadiusWidth / 2, mPaint);
             }
         }
-        //测量
-        mPathMeasure.getSegment(p1start + p1_unit * (flag - 1), v9, mDst2Path, true);
-        //第一段曲线 终点绘制
-        if (mCurrentTimeUnit == 0.5 && sign == 1) {
-            mPaint.setStyle(Paint.Style.FILL);
-            mCanvas.drawCircle(-mRadius, 0, mRadiusWidth / 2, mPaint);
-        } else if (mCurrentTimeUnit == 0.5 && sign == 2) {
-            //第二段曲线 终点绘制
-            mPaint.setStyle(Paint.Style.FILL);
-            mCanvas.drawCircle(mRadius, 0, mRadiusWidth / 2, mPaint);
-        }
-        LogUtils.d("--sign  " + sign + "  current time unit " + mCurrentTimeUnit);
-        //设置透明度
-        mPaint.setAlpha((int) alpha);
-        //设置Style
-        mPaint.setStyle(Paint.Style.STROKE);
-        //调制宽度
-        mPaint.setStrokeWidth(mRadiusWidth);
-        //绘制
-        mCanvas.drawPath(mDst2Path, mPaint);
-
-
-    }
-
-    private void drawFunction(float p1start, float p1_unit, int flag) {
-        for (int i = 1; i <= mUnitNumber; i++) {
-            drawFunction(p1start, p1_unit, i, flag);
-        }
-    }
-
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        mThread = new Thread(this);
-        if (mIsDefaultStart) {
-            mThread.start();
-            mIsRunning = true;
-        }
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-
-        mIsRunning = false;
-
-        if (mCanvas != null) {
-            mHolder.unlockCanvasAndPost(mCanvas);
-        }
-    }
-
-
-    //更新一周期时间
-    private int mDuration = 2000;
-    //单位绘制时间
-    private int mDurationUnit = 20;
-    //周期内绘制次数
-    private int mDurationCount = mDuration / mDurationUnit;
-    //变化比率
-    private float mDrawUnit = 0.5f / mDurationCount;
-
-    //当前比例
-    private float mCurrentTimeUnit = 0.5f;
-
-    private int mUnitNumber = 14;
-
-    /**
-     * 设置转动时间
-     */
-    public void setDuration(long duration) {
-        if (duration <= 100) {
-            duration = 100;
-        } else if (duration >= 2000) {
-            duration = 2000;
-        }
-        //更新一周期时间
-        this.mDuration = (int) duration;
-        //单位绘制时间
-        this.mDurationUnit = 20;
-        //周期内绘制次数
-        this.mDurationCount = mDuration / mDurationUnit;
-        //变化比率
-        this.mDrawUnit = 0.5f / mDurationCount;
-
-        //当前比例
-        this.mCurrentTimeUnit = 0.0f;
-
-        LogUtils.e("duration " + duration);
     }
 
 
@@ -436,6 +500,7 @@ public class YouKuProgressView extends SurfaceView implements Runnable, SurfaceH
         } else if (radius >= 80) {
             radius = 80;
         }
+        this.mNormalRadius = radius;
         this.mRadius = radius;
         this.mRadiusWidth = radius / 3;
         //设置
@@ -447,12 +512,35 @@ public class YouKuProgressView extends SurfaceView implements Runnable, SurfaceH
         mPathMeasure.setPath(mPath, false);
         mLength = mPathMeasure.getLength();
 
+
     }
 
-    public float getRadius() {
-        return mRadius;
+
+    //更新一周期时间
+    private int mDuration = 2000;
+
+    private int mUnitNumber = 10;
+
+
+    /**
+     * 设置转动时间
+     */
+    public void setDuration(long duration) {
+        if (duration <= 100) {
+            duration = 100;
+        } else if (duration >= 4000) {
+            duration = 4000;
+        }
+        //更新一周期时间
+        this.mDuration = (int) duration;
+        //周期时间 设置
+
+        LogUtils.e("duration " + duration);
     }
 
+    /**
+     * 半周期分割段数
+     */
     public void setUnitNumber(int unitNumber) {
         if (unitNumber <= 8) {
             unitNumber = 8;
@@ -462,20 +550,50 @@ public class YouKuProgressView extends SurfaceView implements Runnable, SurfaceH
         this.mUnitNumber = unitNumber;
     }
 
+    /**
+     * 绘制颜色
+     */
+    private int mColor1 = Color.BLUE;
+    private int mColor2 = Color.RED;
 
-    public void stopYouKuView() {
-        mIsStop = true;
-        mCurrentTimeUnit = 0;
+    public void setYouKuColor(int color1, int color2) {
+        this.mColor1 = color1;
+        this.mColor2 = color2;
     }
 
-    public void startYouKuView() {
-        if (!mIsRunning) {
-            mIsRoate=0;
-            mIsStop=false;
-            mIsRunning = true;
-            mCurrentAngle = 0;
-            mCurrentTimeUnit = 0;
-            mThread.start();
-        }
+
+    private int mStopRepeatCount = 0;
+
+    public void setYouKuStop() {
+        //mYouKuProgressValueAnimator.cancel();
+        mPreProStatue = mCurrentProStatue;
+        mCurrentProStatue = LEVE4_CLOSE;
+        mAnimatorValue = 0;
+        mStopRepeatCount = 0;
+        //停止动画
+        //stopValueAnimatorFunction();
+    }
+
+
+    public void setYouKuStart() {
+        mAnimatorValue = 0f;
+        mCurrentProStatue = PROGRE_STATUE.LEVE1_TRANSLATE;
+        mPreProStatue = LEVE1_TRANSLATE;
+
+        //初始化
+        initValueAnimatorFunction();
+        //开始
+        mYouKuProgressValueAnimator.start();
+    }
+
+
+    public interface OnYouKuCloseListener {
+        void onClose();
+    }
+
+    private OnYouKuCloseListener mYouKuCloseListener;
+
+    public void setYouKuCloseListener(OnYouKuCloseListener youKuCloseListener) {
+        mYouKuCloseListener = youKuCloseListener;
     }
 }

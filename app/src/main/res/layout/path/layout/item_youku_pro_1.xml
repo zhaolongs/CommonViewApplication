@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+                xmlns:youku = "http://schemas.android.com/apk/res-auto"
+                android:layout_width = "match_parent"
+                android:layout_height = "match_parent"
+                android:background = "#ef181818"
+                android:orientation = "vertical" >
+	<com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressView
+		android:id = "@+id/id_youku_show_case1"
+		android:layout_width = "100dp"
+		android:layout_height = "100dp"
+		android:layout_centerInParent = "true"
+		youku:YouKuViewColor1 = "@color/youku_case1_color1"
+		youku:YouKuViewColor2 = "@color/youku_case1_color2"
+		youku:YouKuViewDuration = "2000"
+		youku:YouKuViewIsDefaultStart = "false"
+		youku:YouKuViewRadius = "20dp" />
+	<Button android:id = "@+id/id_youku_close_case1"
+	        android:layout_width = "wrap_content"
+	        android:layout_height = "wrap_content"
+	        android:layout_below = "@+id/id_youku_show_case1"
+	        android:layout_centerHorizontal = "true"
+	        android:layout_marginTop = "10dp"
+	        android:background = "@null"
+	        android:text = "关闭"
+	        android:textColor = "#fff" />
+
+
+</RelativeLayout >

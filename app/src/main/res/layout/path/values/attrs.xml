@@ -116,7 +116,7 @@
     </declare-styleable>
 
     <!--优酷加载进度-->
-    <declare-styleable name="YouKuProgressView">
+    <declare-styleable name="YouKuProgressSurfaceView">
         <!--加载进度圈半径-->
         <attr name="YouKuRadius" format="dimension"/>
         <!--转动时间-->
@@ -128,6 +128,29 @@
         <attr name="YouKuColor2" format="color"/>
 
         <attr name="YouKuIsDefaultStart" format="boolean"/>
+
+    </declare-styleable>
+    <!--优酷加载进度-->
+    <declare-styleable name="YouKuProgressView">
+        <!--加载进度圈半径-->
+        <attr name="YouKuViewRadius" format="dimension"/>
+        <!--转动时间-->
+        <attr name="YouKuViewDuration" format="integer"/>
+        <!--周期分割-->
+        <attr name="YouKuViewUnitNumber" format="integer"/>
+        <!--颜色-->
+        <attr name="YouKuViewColor1" format="color"/>
+        <attr name="YouKuViewColor2" format="color"/>
+        <!--开始绘制 标识 -->
+        <attr name="YouKuViewBackgrouncIsShow" format="boolean"/>
+
+        <!--显示 加载进度圈背景 标识 -->
+        <attr name="YouKuViewIsDefaultStart" format="boolean"/>
+        <!--加载进度圈背景-->
+        <attr name="YouKuViewBackgrouncColor" format="color"/>
+        <!--加载进度圈背景半径-->
+        <attr name="YouKuViewBackgrouncRx" format="dimension"/>
+        <attr name="YouKuViewBackgrouncRy" format="dimension"/>
 
     </declare-styleable>
 </resources>

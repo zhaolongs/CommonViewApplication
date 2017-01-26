@@ -15,7 +15,7 @@
 		android:padding = "10dp"
 		android:text = "baseview 9" />
 
-	<com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressView
+	<com.example.androidlongs.popwindowapplication.sufure.youku.YouKuProgressSurfaceView
 		android:layout_width = "wrap_content"
 		android:layout_height = "wrap_content"
 		switch_button:YouKuDuration = "600"

@@ -31,7 +31,7 @@
         <activity android:name=".PopActivity"/>
         <activity android:name=".path.base8.PathTest8Activity"/>
         <activity android:name=".path.base8.PathCoreMainActivity"/>
-        <activity android:name = ".sufure.youku.YouKuTextActivity" />
+        <activity android:name = ".sufure.youku.YouKuActivity" />
 
         <meta-data android:name="com.example.androidlongs.popwindowapplication.img.glide.GlideConfiguration"
                    android:value="GlideModule"/>
