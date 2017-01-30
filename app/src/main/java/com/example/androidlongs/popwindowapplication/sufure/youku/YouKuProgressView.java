@@ -279,23 +279,23 @@ public class YouKuProgressView extends View {
         //宽度
         int widthModel = MeasureSpec.getMode(widthMeasureSpec);
         if (widthModel == MeasureSpec.AT_MOST) {
-            LogUtils.e("you ku view  width model is at_most");
+            LogUtils.e("view  width model is at_most");
         } else if (widthModel == MeasureSpec.EXACTLY) {
-            LogUtils.e("you ku view width model is exactly ");
+            LogUtils.e("view width model is exactly ");
             defaulWidth = MeasureSpec.getSize(widthMeasureSpec);
         } else {
-            LogUtils.e("you ku view width model is UNSPECIFIED");
+            LogUtils.e("view width model is UNSPECIFIED");
         }
 
         //高度
         int heightModel = MeasureSpec.getMode(heightMeasureSpec);
         if (heightModel == MeasureSpec.AT_MOST) {
-            LogUtils.e("you ku view  height model  at_most ");
+            LogUtils.e("view  height model  at_most ");
         } else if (heightModel == MeasureSpec.EXACTLY) {
-            LogUtils.e("you ku view  height model is  exatly ");
+            LogUtils.e("view  height model is  exatly ");
             defaulHeight = MeasureSpec.getSize(heightMeasureSpec);
         } else {
-            LogUtils.e("you ku view height model is UNSPECIFIED  ");
+            LogUtils.e("view height model is UNSPECIFIED  ");
         }
         //设置
         setMeasuredDimension(defaulWidth, defaulHeight);

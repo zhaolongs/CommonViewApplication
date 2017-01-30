@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.example.androidlongs.popwindowapplication.utils.LogUtils;
 
@@ -14,12 +15,12 @@ import com.example.androidlongs.popwindowapplication.utils.LogUtils;
  * Created by androidlongs on 17/1/29.
  * 站在顶峰，看世界
  * 落在谷底，思人生
- *
- *
+ * <p>
+ * <p>
  * 自定义View基类
  */
 
-abstract class BaseView extends View {
+abstract class BaseView extends View implements ViewTreeObserver.OnGlobalLayoutListener {
 
     //画笔
     private Paint mMPaint;
@@ -34,23 +35,23 @@ abstract class BaseView extends View {
 
     public BaseView(Context context) {
         super(context);
-        initFunction(context,null,0,0);
+        initFunction(context, null, 0, 0);
     }
 
     public BaseView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initFunction(context,attrs,0,0);
+        initFunction(context, attrs, 0, 0);
     }
 
     public BaseView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initFunction(context,attrs,defStyleAttr,0);
+        initFunction(context, attrs, defStyleAttr, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BaseView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initFunction(context,attrs,defStyleAttr,defStyleRes);
+        initFunction(context, attrs, defStyleAttr, defStyleRes);
     }
 
     private void initFunction(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -58,7 +59,7 @@ abstract class BaseView extends View {
         defaulInitFunction(context);
 
         if (attrs != null) {
-            attrsInitFunction(context,attrs);
+            attrsInitFunction(context, attrs);
         }
     }
 
@@ -67,7 +68,7 @@ abstract class BaseView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        sizeChangeInitFunction(w,h);
+        sizeChangeInitFunction(w, h);
     }
 
     @Override
@@ -83,7 +84,7 @@ abstract class BaseView extends View {
         //定义默认宽
         mDefaulWidth = (mDefaulWidth + left + right);
         //定义默认高
-        mDefaulHeight = (mDefaulHeight+ top + bottom);
+        mDefaulHeight = (mDefaulHeight + top + bottom);
 
         LogUtils.v("v defaul width " + mDefaulWidth + "  " + mDefaulHeight);
         /**
@@ -107,21 +108,21 @@ abstract class BaseView extends View {
         if (widthModel == MeasureSpec.AT_MOST) {
             LogUtils.e(" view  width model is at_most");
         } else if (widthModel == MeasureSpec.EXACTLY) {
-            LogUtils.e("you ku view width model is exactly ");
+            LogUtils.e(" view width model is exactly ");
             mDefaulWidth = MeasureSpec.getSize(widthMeasureSpec);
         } else {
-            LogUtils.e("you ku view width model is UNSPECIFIED");
+            LogUtils.e(" view width model is UNSPECIFIED");
         }
 
         //高度
         int heightModel = MeasureSpec.getMode(heightMeasureSpec);
         if (heightModel == MeasureSpec.AT_MOST) {
-            LogUtils.e("you ku view  height model  at_most ");
+            LogUtils.e(" view  height model  at_most ");
         } else if (heightModel == MeasureSpec.EXACTLY) {
-            LogUtils.e("you ku view  height model is  exatly ");
+            LogUtils.e(" view  height model is  exatly ");
             mDefaulHeight = MeasureSpec.getSize(heightMeasureSpec);
         } else {
-            LogUtils.e("you ku view height model is UNSPECIFIED  ");
+            LogUtils.e(" view height model is UNSPECIFIED  ");
         }
         //设置
         setMeasuredDimension(mDefaulWidth, mDefaulHeight);
@@ -131,15 +132,54 @@ abstract class BaseView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.save();
-        canvas.translate(mWidth/2,mHeight/2);
-        onDefaultFunction(canvas);
+        canvas.translate(mWidth / 2, mHeight / 2);
+        onDefaultDrawFunction(canvas);
         canvas.restore();
     }
 
+    /**
+     * OnGlobalLayoutListener 是ViewTreeObserver的内部类，当一个视图树的布局发生改变时，可以被ViewTreeObserver监听到，
+     * 这是一个注册监听视图树的观察者(observer)，在视图树的全局事件改变时得到通知
+     * 需要注意的是OnGlobalLayoutListener可能会被多次触发，因此在得到了高度之后，要将OnGlobalLayoutListener注销掉。
+     */
+    @Override
+    public void onGlobalLayout() {
+        defaultGlobalChangeFunction();
+    }
+
+
+    /**
+     * View出现的时候执行这个方法
+     */
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        //注册OnGlobalLayoutListener
+        getViewTreeObserver().addOnGlobalLayoutListener(this);
+    }
+
+    /**
+     * View从屏幕上消失的时候执行这个方法
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        //注销OnGlobalLayoutListener
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        }
+    }
 
 
     protected abstract void defaulInitFunction(Context context);
+
     protected abstract void attrsInitFunction(Context context, AttributeSet attrs);
+
     protected abstract void sizeChangeInitFunction(int w, int h);
-    protected abstract void onDefaultFunction(Canvas canvas);
+
+    protected abstract void onDefaultDrawFunction(Canvas canvas);
+
+    protected abstract void defaultGlobalChangeFunction();
+
+
 }
