@@ -2,6 +2,7 @@ package com.example.androidlongs.popwindowapplication.base;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -20,10 +21,15 @@ import com.example.androidlongs.popwindowapplication.utils.LogUtils;
 
 abstract class BaseView extends View {
 
+    //画笔
     private Paint mMPaint;
+    //View 宽
     private int mWidth;
+    //View 高
     private int mHeight;
+    //默认高
     private int mDefaulWidth;
+    //默认宽
     private int mDefaulHeight;
 
     public BaseView(Context context) {
@@ -50,6 +56,7 @@ abstract class BaseView extends View {
     private void initFunction(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         mMPaint = new Paint();
         defaulInitFunction(context);
+
         if (attrs != null) {
             attrsInitFunction(context,attrs);
         }
@@ -98,7 +105,7 @@ abstract class BaseView extends View {
         //宽度
         int widthModel = MeasureSpec.getMode(widthMeasureSpec);
         if (widthModel == MeasureSpec.AT_MOST) {
-            LogUtils.e("you ku view  width model is at_most");
+            LogUtils.e(" view  width model is at_most");
         } else if (widthModel == MeasureSpec.EXACTLY) {
             LogUtils.e("you ku view width model is exactly ");
             mDefaulWidth = MeasureSpec.getSize(widthMeasureSpec);
@@ -120,7 +127,19 @@ abstract class BaseView extends View {
         setMeasuredDimension(mDefaulWidth, mDefaulHeight);
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.save();
+        canvas.translate(mWidth/2,mHeight/2);
+        onDefaultFunction(canvas);
+        canvas.restore();
+    }
+
+
+
     protected abstract void defaulInitFunction(Context context);
     protected abstract void attrsInitFunction(Context context, AttributeSet attrs);
     protected abstract void sizeChangeInitFunction(int w, int h);
+    protected abstract void onDefaultFunction(Canvas canvas);
 }
