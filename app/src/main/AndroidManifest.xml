@@ -32,6 +32,7 @@
         <activity android:name=".path.base8.PathTest8Activity"/>
         <activity android:name=".path.base8.PathCoreMainActivity"/>
         <activity android:name = ".sufure.youku.YouKuActivity" />
+        <activity android:name = ".them.ThemeActivity" />
 
         <meta-data android:name="com.example.androidlongs.popwindowapplication.img.glide.GlideConfiguration"
                    android:value="GlideModule"/>
