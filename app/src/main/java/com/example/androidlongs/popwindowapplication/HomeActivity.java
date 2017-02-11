@@ -8,6 +8,7 @@ import android.view.View;
 import com.example.androidlongs.popwindowapplication.button.AnimationButton;
 import com.example.androidlongs.popwindowapplication.path.base8.PathCoreMainActivity;
 import com.example.androidlongs.popwindowapplication.sufure.youku.YouKuActivity;
+import com.example.androidlongs.popwindowapplication.them.ThemeActivity;
 
 /**
  * Created by androidlongs on 17/1/16.
@@ -20,6 +21,7 @@ public class HomeActivity extends Activity {
     private AnimationButton mPopButton;
     private AnimationButton mCoreButton;
     private AnimationButton mYouKuButton;
+    private AnimationButton mThemeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +31,14 @@ public class HomeActivity extends Activity {
         mCoreButton = (AnimationButton) findViewById(R.id.core_home);
 
         mYouKuButton = (AnimationButton) findViewById(R.id.youku_home);
+        mThemeButton = (AnimationButton) findViewById(R.id.them_home);
 
 
 
         mCoreButton.setOnClickListener(mCoreClickListener);
         mPopButton.setOnClickListener(mPopClickListener);
         mYouKuButton.setOnClickListener(mYouKuClickListener);
+        mThemeButton.setOnClickListener(mThemeClickListener);
     }
     //pop主页面
     private View.OnClickListener mPopClickListener = new View.OnClickListener() {
@@ -61,5 +65,11 @@ public class HomeActivity extends Activity {
         }
     };
 
-
+    //Theme
+    private View.OnClickListener mThemeClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this,ThemeActivity.class));
+        }
+    };
 }
