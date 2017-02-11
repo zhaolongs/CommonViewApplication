@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-sdk android:minSdkVersion="3" />
 
+    <uses-permission android:name = "android.permission.READ_CONTACTS"/>
+    <uses-permission android:name = "android.permission.WRITE_CONTACTS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -33,6 +36,7 @@
         <activity android:name=".path.base8.PathCoreMainActivity"/>
         <activity android:name = ".sufure.youku.YouKuActivity" />
         <activity android:name = ".them.ThemeActivity" />
+        <activity android:name = ".phone.PhoneActivity" />
 
         <meta-data android:name="com.example.androidlongs.popwindowapplication.img.glide.GlideConfiguration"
                    android:value="GlideModule"/>

@@ -32,6 +32,7 @@ android {
                     'src/main/res/layout/pie' ,
                     'src/main/res/layout/path' ,
                     'src/main/res/layout/them' ,
+                    'src/main/res/layout/phone' ,
                     'src/main/res/layout/pop1'
             ]
 
