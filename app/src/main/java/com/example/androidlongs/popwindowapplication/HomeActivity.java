@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.androidlongs.popwindowapplication.button.AnimationButton;
 import com.example.androidlongs.popwindowapplication.path.base8.PathCoreMainActivity;
+import com.example.androidlongs.popwindowapplication.phone.PhoneActivity;
 import com.example.androidlongs.popwindowapplication.sufure.youku.YouKuActivity;
 import com.example.androidlongs.popwindowapplication.them.ThemeActivity;
 
@@ -22,6 +23,7 @@ public class HomeActivity extends Activity {
     private AnimationButton mCoreButton;
     private AnimationButton mYouKuButton;
     private AnimationButton mThemeButton;
+    private AnimationButton mPhoneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +33,23 @@ public class HomeActivity extends Activity {
         mCoreButton = (AnimationButton) findViewById(R.id.core_home);
 
         mYouKuButton = (AnimationButton) findViewById(R.id.youku_home);
-        mThemeButton = (AnimationButton) findViewById(R.id.them_home);
 
+        mThemeButton = (AnimationButton) findViewById(R.id.them_home);
+        mPhoneButton = (AnimationButton) findViewById(R.id.phone_home);
 
 
         mCoreButton.setOnClickListener(mCoreClickListener);
         mPopButton.setOnClickListener(mPopClickListener);
         mYouKuButton.setOnClickListener(mYouKuClickListener);
         mThemeButton.setOnClickListener(mThemeClickListener);
+        mPhoneButton.setOnClickListener(mPhoneClickListener);
     }
+
     //pop主页面
     private View.OnClickListener mPopClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            HomeActivity.this.startActivity(new Intent(HomeActivity.this,PopActivity.class));
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this, PopActivity.class));
         }
     };
 
@@ -52,7 +57,7 @@ public class HomeActivity extends Activity {
     private View.OnClickListener mCoreClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            HomeActivity.this.startActivity(new Intent(HomeActivity.this,PathCoreMainActivity.class));
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this, PathCoreMainActivity.class));
         }
     };
 
@@ -61,7 +66,7 @@ public class HomeActivity extends Activity {
     private View.OnClickListener mYouKuClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            HomeActivity.this.startActivity(new Intent(HomeActivity.this,YouKuActivity.class));
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this, YouKuActivity.class));
         }
     };
 
@@ -69,7 +74,13 @@ public class HomeActivity extends Activity {
     private View.OnClickListener mThemeClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            HomeActivity.this.startActivity(new Intent(HomeActivity.this,ThemeActivity.class));
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this, ThemeActivity.class));
+        }
+    };
+    private View.OnClickListener mPhoneClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this, PhoneActivity.class));
         }
     };
 }
