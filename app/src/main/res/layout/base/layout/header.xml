@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:orientation = "vertical" >
+	<!--title-->
+	<RelativeLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "48dp"
+		android:background = "@color/baseHeaderColor"
+		android:orientation = "horizontal"
+	>
+
+		<ImageView android:id = "@+id/header_image"
+		           android:layout_width = "60dp"
+		           android:layout_height = "40dp"
+		           android:layout_centerVertical = "true"
+		           android:layout_gravity = "center_vertical"
+		           android:paddingBottom = "10dp"
+		           android:paddingLeft = "14dp"
+		           android:paddingRight = "24dp"
+		           android:paddingTop = "10dp"
+		           android:src = "@mipmap/defaul_image"
+
+		           android:visibility = "gone" />
+
+		<TextView
+			android:id = "@+id/header_title"
+			android:layout_width = "match_parent"
+			android:layout_height = "match_parent"
+			android:layout_gravity = "center"
+			android:gravity = "center"
+			android:text = "home"
+			android:textColor = "#fff"
+			android:textSize = "16sp" />
+	</RelativeLayout >
+</LinearLayout >
