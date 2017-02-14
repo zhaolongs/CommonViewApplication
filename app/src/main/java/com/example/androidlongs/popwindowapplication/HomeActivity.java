@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.androidlongs.popwindowapplication.bitmap.SaveViewToBitmapActivity;
 import com.example.androidlongs.popwindowapplication.button.AnimationButton;
 import com.example.androidlongs.popwindowapplication.path.base8.PathCoreMainActivity;
 import com.example.androidlongs.popwindowapplication.phone.PhoneActivity;
@@ -24,6 +25,7 @@ public class HomeActivity extends Activity {
     private AnimationButton mYouKuButton;
     private AnimationButton mThemeButton;
     private AnimationButton mPhoneButton;
+    private AnimationButton mViewSaveBitmapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,15 @@ public class HomeActivity extends Activity {
         mThemeButton = (AnimationButton) findViewById(R.id.them_home);
         mPhoneButton = (AnimationButton) findViewById(R.id.phone_home);
 
+        mViewSaveBitmapButton = (AnimationButton) findViewById(R.id.view_save_to_bitmap_home);
+
 
         mCoreButton.setOnClickListener(mCoreClickListener);
         mPopButton.setOnClickListener(mPopClickListener);
         mYouKuButton.setOnClickListener(mYouKuClickListener);
         mThemeButton.setOnClickListener(mThemeClickListener);
         mPhoneButton.setOnClickListener(mPhoneClickListener);
+        mViewSaveBitmapButton.setOnClickListener(mViewSaveToBitmapClickListener);
     }
 
     //pop主页面
@@ -81,6 +86,12 @@ public class HomeActivity extends Activity {
         @Override
         public void onClick(View v) {
             HomeActivity.this.startActivity(new Intent(HomeActivity.this, PhoneActivity.class));
+        }
+    };
+    private View.OnClickListener mViewSaveToBitmapClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            HomeActivity.this.startActivity(new Intent(HomeActivity.this, SaveViewToBitmapActivity.class));
         }
     };
 }

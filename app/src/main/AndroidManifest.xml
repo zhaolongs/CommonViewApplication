@@ -37,6 +37,7 @@
         <activity android:name = ".sufure.youku.YouKuActivity" />
         <activity android:name = ".them.ThemeActivity" />
         <activity android:name = ".phone.PhoneActivity" />
+        <activity android:name = ".bitmap.SaveViewToBitmapActivity" />
 
         <meta-data android:name="com.example.androidlongs.popwindowapplication.img.glide.GlideConfiguration"
                    android:value="GlideModule"/>

@@ -20,7 +20,7 @@
 		           android:paddingLeft = "14dp"
 		           android:paddingRight = "24dp"
 		           android:paddingTop = "10dp"
-		           android:src = "@mipmap/defaul_image"
+		           android:src = "@mipmap/back"
 
 		           android:visibility = "gone" />
 
