@@ -5,19 +5,34 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#ff282fed"
-        android:gravity="center">
+    <!--title-->
+    <RelativeLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "48dp"
+        android:background = "@color/baseHeaderColor"
+        android:orientation = "horizontal"
+    >
+
+        <ImageView android:id = "@+id/id_youku_home_back"
+                   android:layout_width = "60dp"
+                   android:layout_height = "40dp"
+                   android:layout_gravity = "center_vertical"
+                   android:paddingBottom = "10dp"
+                   android:paddingLeft = "14dp"
+                   android:paddingRight = "24dp"
+                   android:paddingTop = "10dp"
+                   android:layout_centerVertical="true"
+                   android:src = "@mipmap/back" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="爱心提示"
-            android:textColor="#fff"
-            android:textSize="16sp"/>
-    </LinearLayout>
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            android:layout_gravity = "center"
+            android:gravity = "center"
+            android:text = "爱心"
+            android:textColor = "#fff"
+            android:textSize = "16sp" />
+    </RelativeLayout >
 
     <com.example.androidlongs.popwindowapplication.path.base8.PathCoreView
 

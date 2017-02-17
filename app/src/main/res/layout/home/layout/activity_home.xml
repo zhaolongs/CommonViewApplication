@@ -1,64 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:custom="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <com.example.androidlongs.popwindowapplication.button.AnimationButton
-            android:id="@+id/pop_home"
-            custom:backGroundColor="#f7282fed"
-            custom:backGroundDownColor="#f71d24e9"
-            custom:backGroundRoundColor="#f71d24e9"
-            custom:backGroundRoundRx="8dp"
-            custom:backGroundRoundRy="8dp"
-            custom:buttonTextColor="#fff"
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              xmlns:custom = "http://schemas.android.com/apk/res-auto"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:background = "@color/baseBackgroundColor"
+              android:orientation = "vertical" >
+	<!--title-->
+	<RelativeLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "48dp"
+		android:background = "@color/baseHeaderColor"
+		android:orientation = "horizontal"
+	>
 
-            android:text="pop温馨提示"
-            android:layout_width="180dp"
-            android:layout_height="48dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <com.example.androidlongs.popwindowapplication.button.AnimationButton
-            android:id="@+id/core_home"
-            custom:backGroundColor="#f7282fed"
-            custom:backGroundDownColor="#f71d24e9"
-            custom:backGroundRoundColor="#f71d24e9"
-            custom:backGroundRoundRx="8dp"
-            custom:backGroundRoundRy="8dp"
-            custom:buttonTextColor="#fff"
+		<ImageView android:id = "@+id/id_youku_home_back"
+		           android:layout_width = "60dp"
+		           android:layout_height = "40dp"
+		           android:layout_centerVertical = "true"
+		           android:layout_gravity = "center_vertical"
+		           android:paddingBottom = "10dp"
+		           android:paddingLeft = "14dp"
+		           android:paddingRight = "24dp"
+		           android:paddingTop = "10dp"
+		           android:src = "@mipmap/defaul_image"
 
-            android:text="可爱的心形"
-            android:layout_width="180dp"
-            android:layout_height="48dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <com.example.androidlongs.popwindowapplication.button.AnimationButton
-            android:id="@+id/youku_home"
-            custom:backGroundColor="#f7282fed"
-            custom:backGroundDownColor="#f71d24e9"
-            custom:backGroundRoundColor="#f71d24e9"
-            custom:backGroundRoundRx="8dp"
-            custom:backGroundRoundRy="8dp"
-            custom:buttonTextColor="#fff"
+		           android:visibility = "gone" />
 
-            android:text="优酷加载"
-            android:layout_width="180dp"
-            android:layout_height="48dp"/>
-    </LinearLayout>
-</LinearLayout>
+		<TextView
+			android:layout_width = "match_parent"
+			android:layout_height = "match_parent"
+			android:layout_gravity = "center"
+			android:gravity = "center"
+			android:text = "home"
+			android:textColor = "#fff"
+			android:textSize = "16sp" />
+	</RelativeLayout >
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "22dp"
+		android:gravity = "center"
+		android:orientation = "horizontal" >
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/pop_home"
+			android:layout_width = "180dp"
+			android:layout_height = "48dp"
+			android:text = "pop温馨提示"
+			custom:backGroundColor = "#f7282fed"
+			custom:backGroundDownColor = "#f71d24e9"
+			custom:backGroundRoundColor = "#f71d24e9"
+
+			custom:backGroundRoundRx = "8dp"
+			custom:backGroundRoundRy = "8dp"
+			custom:buttonTextColor = "#fff" />
+	</LinearLayout >
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "12dp"
+		android:gravity = "center"
+		android:orientation = "horizontal" >
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/core_home"
+			android:layout_width = "180dp"
+			android:layout_height = "48dp"
+			android:text = "可爱的心形"
+			custom:backGroundColor = "#f7282fed"
+			custom:backGroundDownColor = "#f71d24e9"
+			custom:backGroundRoundColor = "#f71d24e9"
+
+			custom:backGroundRoundRx = "8dp"
+			custom:backGroundRoundRy = "8dp"
+			custom:buttonTextColor = "#fff" />
+	</LinearLayout >
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "12dp"
+		android:gravity = "center"
+		android:orientation = "horizontal" >
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/youku_home"
+			android:layout_width = "180dp"
+			android:layout_height = "48dp"
+			android:text = "优酷加载"
+			custom:backGroundColor = "#f7282fed"
+			custom:backGroundDownColor = "#f71d24e9"
+			custom:backGroundRoundColor = "#f71d24e9"
+
+			custom:backGroundRoundRx = "8dp"
+			custom:backGroundRoundRy = "8dp"
+			custom:buttonTextColor = "#fff" />
+	</LinearLayout >
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "12dp"
+		android:gravity = "center"
+		android:orientation = "horizontal" >
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/them_home"
+			android:layout_width = "180dp"
+			android:layout_height = "48dp"
+			android:text = "图片颜色"
+			custom:backGroundColor = "#f7282fed"
+			custom:backGroundDownColor = "#f71d24e9"
+			custom:backGroundRoundColor = "#f71d24e9"
+
+			custom:backGroundRoundRx = "8dp"
+			custom:backGroundRoundRy = "8dp"
+			custom:buttonTextColor = "#fff" />
+	</LinearLayout >
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "12dp"
+		android:gravity = "center"
+		android:orientation = "horizontal" >
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/phone_home"
+			android:layout_width = "180dp"
+			android:layout_height = "48dp"
+			android:text = "联系人"
+			custom:backGroundColor = "#f7282fed"
+			custom:backGroundDownColor = "#f71d24e9"
+			custom:backGroundRoundColor = "#f71d24e9"
+
+			custom:backGroundRoundRx = "8dp"
+			custom:backGroundRoundRy = "8dp"
+			custom:buttonTextColor = "#fff" />
+	</LinearLayout >
+	<LinearLayout
+		android:layout_width = "match_parent"
+		android:layout_height = "wrap_content"
+		android:layout_marginTop = "12dp"
+		android:gravity = "center"
+		android:orientation = "horizontal" >
+		<com.example.androidlongs.popwindowapplication.button.AnimationButton
+			android:id = "@+id/view_save_to_bitmap_home"
+			android:layout_width = "180dp"
+			android:layout_height = "48dp"
+			android:text = "保存View为Bitmap"
+			custom:backGroundColor = "#f7282fed"
+			custom:backGroundDownColor = "#f71d24e9"
+			custom:backGroundRoundColor = "#f71d24e9"
+
+			custom:backGroundRoundRx = "8dp"
+			custom:backGroundRoundRy = "8dp"
+			custom:buttonTextColor = "#fff" />
+	</LinearLayout >
+</LinearLayout >

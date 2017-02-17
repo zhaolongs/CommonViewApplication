@@ -48,6 +48,9 @@ public class HomeActivity extends Activity {
         mThemeButton.setOnClickListener(mThemeClickListener);
         mPhoneButton.setOnClickListener(mPhoneClickListener);
         mViewSaveBitmapButton.setOnClickListener(mViewSaveToBitmapClickListener);
+
+
+
     }
 
     //pop主页面

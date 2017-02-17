@@ -3,6 +3,7 @@ package com.example.androidlongs.popwindowapplication.bitmap;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,6 +51,7 @@ public class SaveViewToBitmapActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
 
+            //获取View
             View viewLayout = getLayoutInflater().inflate(R.layout.activity_bitmap_save_view_to_bitmap, null);
             //打开图像缓存
             viewLayout.setDrawingCacheEnabled(true);
@@ -62,21 +64,26 @@ public class SaveViewToBitmapActivity extends BaseActivity {
             viewLayout.layout(0, 0, viewLayout.getMeasuredWidth(), viewLayout.getMeasuredHeight());
 
             try {
+                //获取储存路径
                 String path = Environment.getExternalStorageDirectory().getPath();
-                String fileName = path+"/"+System.currentTimeMillis()+".PNG";
-                System.out.println(""+fileName);
+                String fileName = path + "/" + System.currentTimeMillis() + ".PNG";
+                System.out.println("" + fileName);
                 //获取组件截图
                 Bitmap bitmap = viewLayout.getDrawingCache();
                 //
                 FileOutputStream fileOutStream = new FileOutputStream(fileName);
                 //保存
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,fileOutStream);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutStream);
                 //
                 fileOutStream.close();
             } catch (Exception e) {
+                Log.e("view", "exception " + e.getMessage());
             } finally {
 
             }
         }
     };
+
+
+
 }
